@@ -1,16 +1,17 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
-class User(models.Model):
-    felhasznalo_nev = models.CharField(max_length=50)
-    kepzes_eve = models.IntegerField()
-    email_cim = models.EmailField()
-    profilkep = models.ImageField()
+
+
+class Profile(models.Model):
+    year_of_join = models.IntegerField()  # mikor csatlakozott a kszkepzeshez
+    user = models.OneToOneField(User)  # django beépített user osztálya
 
     def __str__(self):
-        return self.felhasznalo_nev
+        return self.user.username
 
-class Kepzes_alkalom(models.Model):
-    idopont = models.DateField()
-    letszam = models.IntegerField()
-    resztvevok = models.ManyToManyField(User)
+
+class Kszk_training(models.Model):
+    date = models.DateField()
+    num_of_pers = models.IntegerField()
+    visitors = models.ManyToManyField(User)
