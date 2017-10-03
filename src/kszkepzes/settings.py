@@ -39,12 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-<<<<<<< HEAD
     'stats'
-=======
     'social_django',
     'authsch',
->>>>>>> f31ae04982515a54fa3ce667ce7f5b6aeaf87c00
 ]
 
 MIDDLEWARE = [

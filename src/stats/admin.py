@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Profile, Kszk_training
+from .models import Profile, Event
 
 admin.site.register(Profile)
-admin.site.register(Kszk_training)
+admin.site.register(Event)
 # Register your models here.
