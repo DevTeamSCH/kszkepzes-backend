@@ -11,7 +11,7 @@ class Profile(models.Model):
         return self.user.username
 
 
-class Kszk_training(models.Model):
+class Event(models.Model):
     date = models.DateField()
     num_of_pers = models.IntegerField()
     visitors = models.ManyToManyField(User)
