@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    year_of_join = models.IntegerField()  # mikor csatlakozott a kszkepzeshez
-    user = models.OneToOneField(User)  # django beépített user osztálya
+    year_of_join = models.IntegerField()
+    user = models.OneToOneField(User)
+    # Homeworks=models.ForeignKey(Homework);
 
     def __str__(self):
         return self.user.username
 
 
-class Event(models.Model):
+class KszkEvent(models.Model):
     date = models.DateField()
     num_of_pers = models.IntegerField()
     visitors = models.ManyToManyField(User)
