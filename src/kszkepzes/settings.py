@@ -39,15 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
-<<<<<<< HEAD
-    'stats'
+    'stats',
     'social_django',
     'authsch',
 ]
-=======
-    'stats',
-    ]
->>>>>>> A kezdetleges modellek REST-esitve lettek
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
