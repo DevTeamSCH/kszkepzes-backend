@@ -103,3 +103,8 @@ ENV/
 
 *.sqlite3
 *.pyc
+
+# environment scripts
+environment.sh
+environment.ps1
+environment.bat
