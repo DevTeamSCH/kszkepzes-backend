@@ -6,9 +6,4 @@ from . import serializers
 
 class KszkEventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.KszkEventSerializer
-    queryset = models.KszkEvent.objects.filter()
-
-
-class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.ProfileSerializer
-    queryset = models.Profile.objects.all()
+    queryset = models.KszkEvent.objects.all()
