@@ -2,7 +2,6 @@ from django.db import models
 from account.models import Profile
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-# Create your models here.
 
 
 class KszkEvent(models.Model):
