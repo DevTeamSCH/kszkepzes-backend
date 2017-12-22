@@ -9,3 +9,14 @@ class ArticleListSerializer(serializers.ModelSerializer):
             'author',
             'title',
             ]
+
+
+class ArticleDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = [
+            'author',
+            'title',
+            'text',
+            'date',
+            ]

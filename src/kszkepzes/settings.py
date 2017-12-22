@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'authsch',
     'account',
     'stats',
+    'news',
 ]
 
 MIDDLEWARE = [
