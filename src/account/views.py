@@ -11,7 +11,13 @@ class ProfileCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated, ]
 
 
-class ProfileUpdateView(generics.RetrieveAPIView):
+class ProfileDetailView(generics.RetrieveAPIView):
+    serializer_class = serializers.ProfileDetailSerializer
+    queryset = models.Profile.objects.all()
+    permission_classes = [IsAuthenticated, ]
+
+
+class ProfileUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.ProfileUpdateSerializer
     queryset = models.Profile.objects.all()
     permission_classes = [IsAuthenticated, ]

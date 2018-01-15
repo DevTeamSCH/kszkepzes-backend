@@ -84,3 +84,35 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
                 pref_group=pref_group,
                 )
         profile_obj.save()
+
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    def current_user(self):
+        user = self.context['request'].user
+        return user
+
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Profile
+        fields = [
+                'first_name',
+                'last_name',
+                'email',
+                'nick',
+                'pref_group',
+                ]
+
+    def get_first_name(self):
+        user = self.current_user()
+        return user.first_name
+
+    def get_last_name(self):
+        user = self.ccurrent_user()
+        return user.last_name
+
+    def get_email(self):
+        user = self.ccurrent_user()
+        return user.email
