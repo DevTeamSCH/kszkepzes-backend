@@ -17,9 +17,6 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 env:
   - DATABASE_URL="postgresql://postgres:postgres@postgres:5432/travis_ci_test"
-  - SECRET_KEY="secret"
-  - AUTHSCH_KEY="secret"
-  - AUTHSCH_SECRET="secret"
 # command to run tests
 script:
   - flake8 --max-line-length=125 --exclude=src/kszkepzes,migrations
