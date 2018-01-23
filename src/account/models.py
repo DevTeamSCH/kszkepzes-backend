@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
-
 class Profile(models.Model):
     join_date = models.DateField(auto_now=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,7 +14,6 @@ class Profile(models.Model):
         return self.user.username
 
 
-
 class GroupChoice(models.Model):
     TEAMS = (
         ('DT', 'DevTeam'),
@@ -26,8 +23,11 @@ class GroupChoice(models.Model):
         ('HAT', 'Hallgatói Tudásbázis'),
         ('N', 'None'),
     )
-    pref_group = models.CharField(max_length=10, choices=TEAMS, default='None')
-    profile =  models.ForeignKey(Profile, related_name="preferd_groups")
+    choice = models.CharField(max_length=10, choices=TEAMS, default='None')
+    profile = models.ForeignKey(Profile, related_name="preferd_groups", on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('pref_group', 'profile')
+        unique_together = ('choice', 'profile')
+
+    def __str__(self):
+        return self.choice
