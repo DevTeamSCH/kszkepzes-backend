@@ -1,7 +1,6 @@
 # KSZKépzés Honlap
 
-[![pipeline status](https://git.sch.bme.hu/kszk/devteam/kszkepzes/badges/master/pipeline.svg)](https://git.sch.bme.hu/kszk/devteam/kszkepzes/commits/master)
-[![coverage report](https://git.sch.bme.hu/kszk/devteam/kszkepzes/badges/master/coverage.svg)](https://git.sch.bme.hu/kszk/devteam/kszkepzes/commits/master)
+[![Build Status](https://travis-ci.org/DevTeamSCH/kszkepzes.svg?branch=master)](https://travis-ci.org/DevTeamSCH/kszkepzes)
 
 ## Követelmények
 
