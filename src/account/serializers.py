@@ -1,12 +1,20 @@
 from rest_framework import serializers
-from account.models import Profile
+from account import models
 from django.contrib.auth.models import User
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
-        fields = '__all__'
+        model = models.GroupChoice
+
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    preferd_groups = ChoiceSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Profile
+        fields = serializers.ALL_FIELDS
 
 
 class ProfileCreateSerializer(serializers.ModelSerializer):
@@ -19,7 +27,7 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
 
     class Meta:
-        model = Profile
+        model = models.Profile
         fields = [
                 'first_name',
                 'last_name',
@@ -39,7 +47,7 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
             nick = validated_data['nick']
             pref_group = validated_data['pref_group']
             signed = validated_data['signed']
-            profile_obj = Profile(
+            profile_obj = models.Profile(
                     user=user,
                     nick=nick,
                     pref_group=pref_group,
@@ -61,7 +69,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
 
     class Meta:
-        model = Profile
+        model = models.Profile
         fields = [
                 'first_name',
                 'last_name',
@@ -78,7 +86,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         user.save()
         nick = validated_data['nick']
         pref_group = validated_data['pref_group']
-        profile_obj = Profile(
+        profile_obj = models.Profile(
                 user=user,
                 nick=nick,
                 pref_group=pref_group,
@@ -96,7 +104,7 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField()
 
     class Meta:
-        model = Profile
+        model = models.Profile
         fields = [
                 'first_name',
                 'last_name',
