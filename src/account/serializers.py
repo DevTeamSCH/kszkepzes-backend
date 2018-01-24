@@ -5,12 +5,12 @@ from account import models
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.GroupChoice
-        fields = ('choice', )
+        fields = ('choice', 'profile')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    preferd_groups = serializers.SlugRelatedField(slug_field='choice', many=True, queryset=models.GroupChoice.objects.all())
+    groups = serializers.SlugRelatedField(many=True, slug_field="choice", queryset=models.GroupChoice.objects.all())
 
     class Meta:
         model = models.Profile
-        fields = ('join_date', 'user', 'nick', 'signed', 'preferd_groups')
+        fields = ('id', 'join_date', 'user', 'nick', 'motivation', 'signed', 'groups')

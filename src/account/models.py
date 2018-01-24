@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Profile(models.Model):
-    join_date = models.DateField(auto_now=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    nick = models.CharField(max_length=15, blank=True, null=True)
-    signed = models.BooleanField(default=False, null=False)
-    # Homeworks=models.ForeignKey(Homework)
-
-    def __str__(self):
-        return self.user.username
-
-
 class GroupChoice(models.Model):
     TEAMS = (
         ('DT', 'DevTeam'),
@@ -23,11 +11,20 @@ class GroupChoice(models.Model):
         ('HAT', 'Hallgatói Tudásbázis'),
         ('N', 'None'),
     )
-    choice = models.CharField(max_length=10, choices=TEAMS, default='None')
-    profile = models.ForeignKey(Profile, related_name="preferd_groups", on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('choice', 'profile')
+    choice = models.CharField(max_length=10, choices=TEAMS, default='N', unique=True)
 
     def __str__(self):
         return self.choice
+
+
+class Profile(models.Model):
+    join_date = models.DateField(auto_now=True)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    motivation = models.TextField(null=True)
+    nick = models.CharField(max_length=15, blank=True, null=True)
+    signed = models.BooleanField(default=False, null=False)
+    groups = models.ManyToManyField(GroupChoice, related_name='profiles')
+    # Homeworks=models.ForeignKey(Homework)
+
+    def __str__(self):
+        return self.user.username
