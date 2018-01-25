@@ -17,7 +17,7 @@ class TasksViewSet(viewsets.ModelViewSet):
 class SolutionViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SolutionSerializer
     queryset = models.Solution.objects.all()
-    permission_classes = (permissions.SolutionPermission, )
+    permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, )
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

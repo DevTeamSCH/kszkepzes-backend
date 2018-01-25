@@ -34,4 +34,4 @@ class IsStaffOrReadOnlyForAuthenticated(BasePermission):
         return (request.user.is_staff or
                 request.method in SAFE_METHODS and
                 request.user.is_authenticated
-        )
+                )
