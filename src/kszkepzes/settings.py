@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'social_django',
     'authsch',
     'homework',
+    'account',
+    'stats',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ LOGIN_URL = "login/authsch/"
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Budapest'
 
 USE_I18N = True
 
