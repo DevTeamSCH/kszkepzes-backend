@@ -29,6 +29,7 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 
 
 class IsStaffOrReadOnlyForAuthenticated(BasePermission):
+
     """
     The request is authenticated as a staff, or is a read-only request for authenticated.
     """

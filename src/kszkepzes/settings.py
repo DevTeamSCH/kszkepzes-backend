@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'homework',
     'account',
     'stats',
+    'news',
 ]
 
 MIDDLEWARE = [
