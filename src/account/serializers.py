@@ -14,3 +14,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Profile
         fields = ('id', 'join_date', 'user', 'nick', 'motivation', 'signed', 'groups')
+
+    def validate(self, data):
+        if data['join_date'] > models.Deadline.get_solo().deadline:
+            raise serializers.ValidationError("join_date more than deadline")
+        return data

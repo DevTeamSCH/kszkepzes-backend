@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from solo.admin import SingletonModelAdmin
 
 
 @admin.register(models.Profile)
@@ -14,3 +15,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(models.GroupChoice)
+admin.site.register(models.Deadline, SingletonModelAdmin)

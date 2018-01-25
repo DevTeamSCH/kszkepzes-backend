@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from solo.models import SingletonModel
 
 
 class GroupChoice(models.Model):
@@ -28,3 +29,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Deadline(SingletonModel):
+    deadline = models.DateField(null=True)
