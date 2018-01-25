@@ -30,8 +30,12 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 
 class IsStaffOrReadOnlyForAuthenticated(BasePermission):
 
-    def has_object_permission(self, request, view, obj):
-        return (request.user.is_staff or
-                request.method in SAFE_METHODS and
-                request.user.is_authenticated
-                )
+    """
+    The request is authenticated as a staff, or is a read-only request for authenticated.
+    """
+    def has_permission(self, request, view):
+        return (
+            request.user.is_staff or
+            request.method in SAFE_METHODS and
+            request.user.is_authenticated
+        )

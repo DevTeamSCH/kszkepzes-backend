@@ -11,7 +11,7 @@ from rest_framework import status
 class TasksViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TaskSerializer
     queryset = models.Task.objects.all()
-    permission_classes = (permissions.IsStaffOrReadOnly, )
+    permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, )
 
 
 class SolutionViewSet(viewsets.ModelViewSet):
