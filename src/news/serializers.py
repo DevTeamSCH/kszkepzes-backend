@@ -5,4 +5,4 @@ from rest_framework import serializers
 class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = serializers.ALL_FIELDS
