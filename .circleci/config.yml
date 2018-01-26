@@ -22,8 +22,8 @@ jobs:
       - run:
           command: |
             flake8 --max-line-length=125 --exclude=src/kszkepzes,migrations
-            python manage.py migrate
-            python manage.py test
+            python src/manage.py migrate
+            python src/manage.py test
       - store_test_results:
           path: test-results
       - store_artifacts:
