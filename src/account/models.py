@@ -19,7 +19,8 @@ class GroupChoice(models.Model):
 
 
 class Profile(models.Model):
-    join_date = models.DateField(auto_now=True)
+    join_date = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     motivation = models.TextField(null=True)
     nick = models.CharField(max_length=15, blank=True, null=True)
@@ -32,4 +33,4 @@ class Profile(models.Model):
 
 
 class Deadline(SingletonModel):
-    deadline = models.DateField(null=True)
+    deadline = models.DateTimeField(null=True)
