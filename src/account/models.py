@@ -22,8 +22,9 @@ class Profile(models.Model):
     join_date = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
-    motivation = models.TextField(null=True)
-    nick = models.CharField(max_length=15, blank=True, null=True)
+    # TODO: Change the default to json render side
+    motivation = models.TextField(blank=True, default='')
+    nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
     groups = models.ManyToManyField(GroupChoice, related_name='profiles')
     # Homeworks=models.ForeignKey(Homework)
