@@ -1,6 +1,8 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
@@ -12,3 +14,15 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', 5432),
     }
 }
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
