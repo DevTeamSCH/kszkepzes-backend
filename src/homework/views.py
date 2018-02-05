@@ -28,8 +28,8 @@ class SolutionsViewSet(viewsets.ModelViewSet):
         # task_id = serializer.validated_data.get('task')
         # date = serializer.validated_data['date']
         # task = get_object_or_404(models.Task, pk=task_id)
-        if task_id.deadline < date:
-            return Http404("Deadline")
+        # if task_id.deadline < date:
+        #     return Http404("Deadline")
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
