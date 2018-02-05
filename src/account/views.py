@@ -16,6 +16,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
         if user.has_perm(permissions.IsAdminUser):
             return models.Profile.objects.all()
 
+        return models.Profile.objects.filter(pk=user.profile.id)
+
     @list_route(methods=['get'])
     def me(self, request):
         serializer = self.serializer_class(request.user.profile)

@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/DevTeamSCH/kszkepzes.svg?branch=master)](https://travis-ci.org/DevTeamSCH/kszkepzes)
 
+[![CircleCI](https://circleci.com/gh/DevTeamSCH/kszkepzes/tree/master.svg?style=svg)](https://circleci.com/gh/DevTeamSCH/kszkepzes/tree/master)
+
 ## Követelmények
 
 1. python3.5
