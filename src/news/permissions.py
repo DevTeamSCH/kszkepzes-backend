@@ -2,6 +2,6 @@ from rest_framework.permissions import BasePermission
 from rest_framework.permissions import SAFE_METHODS
 
 
-class IsStaffOrReadOnlyForAuthenticated(BasePermission):
+class IsStaffOrReadOnly(BasePermission):
     def has_permission(self, request, view):
-        return request.user.is_staff or request.method in SAFE_METHODS and request.user.is_authenticated
+        return request.user.is_staff or request.method in SAFE_METHODS
