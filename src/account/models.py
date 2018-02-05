@@ -23,7 +23,9 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     # TODO: Change the default to json render side
-    motivation = models.TextField(blank=True, default='')
+    motivation_about = models.TextField(blank=True, default='')
+    motivation_profession = models.TextField(blank=True, default='')
+    motivation_exercise = models.TextField(blank=True, default='')
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
     groups = models.ManyToManyField(GroupChoice, related_name='profiles')

@@ -15,7 +15,19 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Profile
-        fields = ('id', 'join_date', 'updated_at', 'user', 'nick', 'motivation', 'signed', 'groups')
+        fields = (
+            'id',
+            'join_date',
+            'updated_at',
+            'user',
+            'nick',
+            'motivation',
+            'signed',
+            'groups',
+            'motivation_about',
+            'motivation_profession',
+            'motivation_exercise',
+        )
 
     def validate(self, data):
         deadline = models.Deadline.get_solo().deadline
