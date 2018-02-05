@@ -21,7 +21,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'updated_at',
             'user',
             'nick',
-            'motivation',
             'signed',
             'groups',
             'motivation_about',
