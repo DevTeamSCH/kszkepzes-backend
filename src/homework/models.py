@@ -11,8 +11,8 @@ from django.core import validators
 __MAX_UPLOAD_SIZE = 5242880
 
 
-def validate_deadline(date):
-    if date <= timezone.now():
+def validate_deadline(deadline):
+    if deadline <= timezone.now():
         raise ValidationError(_('Date must be greater than now'), code='invalid')
 
 
