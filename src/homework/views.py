@@ -5,7 +5,7 @@ from rest_framework.decorators import list_route
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 import datetime
-from django.utils.timezone import utc
+from django.utils import timezone
 
 from . import serializers
 from . import models
@@ -27,7 +27,7 @@ class SolutionsViewSet(viewsets.ModelViewSet):
         serializer.validated_data['accepted'] = False
         task = serializer.validated_data['task']
         # task = get_object_or_404(models.Task, pk=task_id.id)
-        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        now = timezone.now()
         if task.deadline < now:
             raise Http404("Deadline")
         serializer.save()
