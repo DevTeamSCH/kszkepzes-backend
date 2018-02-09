@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.decorators import list_route
 from django.http import Http404
 from django.shortcuts import get_object_or_404
+import datetime
+from django.utils.timezone import utc
 
 from . import serializers
 from . import models
@@ -21,24 +23,21 @@ class SolutionsViewSet(viewsets.ModelViewSet):
     queryset = models.Solution.objects.all()
     permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, )
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # serializer.validated_data['accepted'] = False
-        # task_id = serializer.validated_data.get('task')
-        # date = serializer.validated_data['date']
-        # task = get_object_or_404(models.Task, pk=task_id)
-        # if task_id.deadline < date:
-        #     return Http404("Deadline")
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    def perform_create(self, serializer):
+        serializer.validated_data['accepted'] = False
+        task = serializer.validated_data['task']
+        # task = get_object_or_404(models.Task, pk=task_id.id)
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        if task.deadline < now:
+            raise Http404("Deadline")
+        serializer.save()
 
-    def get_queryset(self):
-        user = self.request.user
-        if user.has_perm(permissions.IsStaffUser):
-            return models.Solution.objects.all()
-
-    @list_route(methods=['get'])
-    def me(self, request):
-        serializer = self.serializer_class(request.user.profile) #request ?
-        return Response(serializer.data)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if user.has_perm(permissions.IsStaffUser):
+    #         return models.Solution.objects.all()
+    #
+    # @list_route(methods=['get'])
+    # def me(self, request):
+    #     serializer = self.serializer_class(request.user.profile) #request ?
+    #     return Response(serializer.data)

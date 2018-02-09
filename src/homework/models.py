@@ -16,10 +16,6 @@ def validate_deadline(date):
         raise ValidationError(_('Date must be greater than now'), code='invalid')
 
 
-# def validate_file_size(file):
-#     if file._size > __MAX_UPLOAD_SIZE:
-#         raise ValidationError(_('Please keep filesize under' + __MAX_UPLOAD_SIZE))
-
 class Task(models.Model):
     title = models.CharField(max_length=150)
     date = models.DateTimeField(auto_now_add=True, editable=False)
@@ -34,17 +30,9 @@ class Task(models.Model):
         )],
         blank=True,
     )
-    # files = myfields.RestrictedFileField(
-    #     content_types=['image/png', 'image/jpeg', 'application/zip'],
-    #     max_upload_size=MAX_UPLOAD_SIZE,
-    #     blank=True,
-    #     null=True,
-    # )
-#    solution_file = models.BooleanField()
-#
-#    def clean(self):
-#        if self.deadline <= timezone.now():
-#            raise ValidationError(_('Invalid date'), code='invalid')
+
+    def __str__(self):
+        return self.title
 
 
 class Solution(models.Model):
@@ -62,8 +50,3 @@ class Solution(models.Model):
         blank=True,
     )
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    # files = myfields.RestrictedFileField(
-    #     content_types=['image/png', 'image/jpeg', 'application/zip'],
-    #     max_upload_size=MAX_UPLOAD_SIZE,
-    #     blank=True,
-    # )
