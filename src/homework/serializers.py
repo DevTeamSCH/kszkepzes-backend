@@ -17,11 +17,11 @@ class SolutionSerializer(serializers.ModelSerializer):
         extra_kwargs = {'created_by': {'default': serializers.CurrentUserDefault()}}
         fields = ('task', 'date', 'accepted', 'files', 'created_by')
 
-    def validate(self, attrs):
-        task = attrs['task']
-        date = attrs['date']
-
-        if task.deadline < date:
-            raise serializers.ValidationError("You cannot submit homework after the deadline")
-
-        return attrs
+    # def validate(self, attrs):
+    #     task = attrs['task']
+    #     date = attrs['date']
+    #
+    #     if task.deadline < date:
+    #         raise serializers.ValidationError("You cannot submit homework after the deadline")
+    #
+    #     return attrs
