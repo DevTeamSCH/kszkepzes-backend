@@ -1,9 +1,11 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ExportMixin
 
 from . import models
+from . import resources
 
 
 @admin.register(models.Event)
-class EventAdmin(ImportExportModelAdmin):
-    horizontal_filter = ('visitors', )
+class EventAdmin(ExportMixin, admin.ModelAdmin):
+    filter_horizontal = ('visitors', )
+    resource_class = resources.EventResource
