@@ -1,11 +1,15 @@
 from django.contrib import admin
-from . import models
 from solo.admin import SingletonModelAdmin
+from import_export.admin import ExportMixin
+
+from . import models
+from . import resources
 
 
 @admin.register(models.Profile)
-class ProfileAdmin(admin.ModelAdmin):
+class ProfileAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('user_username', 'join_date')
+    resource_class = resources.SignUpResource
 
     def user_username(self, obj):
         return obj.user.username
