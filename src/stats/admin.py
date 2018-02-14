@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import KszkEvent
+from import_export.admin import ImportExportModelAdmin
+
+from . import models
 
 
-admin.site.register(KszkEvent)
+@admin.register(models.Event)
+class EventAdmin(ImportExportModelAdmin):
+    horizontal_filter = ('visitors', )

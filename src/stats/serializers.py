@@ -2,7 +2,7 @@ from rest_framework import serializers
 from . import models
 
 
-class KszkEventSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.KszkEvent
+        model = models.Event
         fields = ('date',  'visitors')
