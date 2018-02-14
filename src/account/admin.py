@@ -8,7 +8,7 @@ from . import resources
 
 @admin.register(models.Profile)
 class ProfileAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('user_username', 'join_date')
+    list_display = ('user_username', 'full_name', 'join_date')
     resource_class = resources.SignUpResource
 
     def user_username(self, obj):

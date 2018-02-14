@@ -29,10 +29,13 @@ class Profile(models.Model):
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
     groups = models.ManyToManyField(GroupChoice, related_name='profiles')
-    # Homeworks=models.ForeignKey(Homework)
+
+    @property
+    def full_name(self):
+        return self.user.get_full_name()
 
     def __str__(self):
-        return self.user.username
+        return self.full_name
 
 
 class Deadline(SingletonModel):
