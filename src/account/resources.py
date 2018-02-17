@@ -14,6 +14,7 @@ class SignUpResource(resources.ModelResource):
             'user__first_name',
             'user__last_name',
             'user__email',
+            'nick',
             'groups',
             'motivation_about',
             'motivation_profession',
