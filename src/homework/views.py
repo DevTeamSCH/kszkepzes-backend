@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from . import serializers
 from . import models
-from . import permissions
+from common import permissions
 
 
 class TasksViewSet(viewsets.ModelViewSet):
