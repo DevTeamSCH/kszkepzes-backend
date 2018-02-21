@@ -8,6 +8,8 @@ from . import resources
 @admin.register(models.Event)
 class EventAdmin(ExportMixin, admin.ModelAdmin):
     filter_horizontal = ('visitors', )
+    list_filter = ('name', 'date')
+    search_fields = ('name', )
     resource_class = resources.EventResource
 
 
@@ -15,4 +17,5 @@ class EventAdmin(ExportMixin, admin.ModelAdmin):
 class NoteAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('user', 'note', 'event', 'created_by', 'created_at', 'updated_at')
     list_filter = ('user', 'created_by', 'event')
+    search_fields = ('event__name', 'note')
     resource_class = resources.NoteResource
