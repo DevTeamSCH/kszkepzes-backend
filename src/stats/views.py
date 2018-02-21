@@ -4,6 +4,6 @@ from . import models
 from . import serializers
 
 
-class KszkEventViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.KszkEventSerializer
-    queryset = models.KszkEvent.objects.all()
+class EventViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.EventSerializer
+    queryset = models.Event.objects.all()
