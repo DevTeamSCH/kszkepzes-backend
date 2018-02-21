@@ -15,3 +15,16 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Note(models.Model):
+    event = models.ForeignKey(Event, related_name='notes', on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, related_name='notes', on_delete=models.CASCADE)
+    note = models.TextField()
+
+    created_by = models.ForeignKey(Profile, related_name='created_notes', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def __str__(self):
+        return self.note

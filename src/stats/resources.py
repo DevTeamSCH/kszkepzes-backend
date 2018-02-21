@@ -17,3 +17,25 @@ class EventResource(resources.ModelResource):
             'date',
             'visitors',
         )
+
+
+class NoteResource(resources.ModelResource):
+    created_by = fields.Field()
+    user = fields.Field()
+
+    class Meta:
+        model = models.Note
+        fields = (
+            'user',
+            'event__name',
+            'note',
+            'created_at',
+            'updated_at',
+            'created_by',
+        )
+
+    def dehydrate_created_by(self, obj):
+        return obj.created_by.full_name
+
+    def dehydrate_user(self, obj):
+        return obj.user.full_name
