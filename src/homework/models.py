@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.core import validators
-#from account.models import Profile
+from account.models import Profile
 # from . import myfields
 
 
@@ -22,7 +22,7 @@ class Task(models.Model):
     date = models.DateTimeField(auto_now_add=True, editable=False)
     deadline = models.DateTimeField(validators=[validate_deadline])
     text = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING) #Profile
+    created_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     files = models.FileField(
         validators=[validators.FileExtensionValidator(
             'image/png',
@@ -38,7 +38,7 @@ class Task(models.Model):
 
 class Solution(models.Model):
     task = models.ForeignKey(Task, related_name='task_solution', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, related_name='student_solution',  on_delete=models.CASCADE) # Profile
+    created_by = models.ForeignKey(Profile, related_name='student_solution',  on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, editable=False)
     ready = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
