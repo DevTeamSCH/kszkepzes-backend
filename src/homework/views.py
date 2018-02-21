@@ -26,7 +26,6 @@ class SolutionsViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.validated_data['accepted'] = False
         task = serializer.validated_data['task']
-        # task = get_object_or_404(models.Task, pk=task_id.id)
         now = timezone.now()
         if task.deadline < now:
             raise Http404("Deadline")
