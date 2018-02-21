@@ -1,4 +1,4 @@
-from news.permissions import IsStaffOrReadOnly
+from common.permissions import IsStaffOrReadOnly
 from rest_framework import viewsets
 from news.models import Article
 from news.serializers import ArticleListSerializer
