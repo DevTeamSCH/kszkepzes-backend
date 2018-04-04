@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=150)),
                 ('date', models.DateTimeField(auto_now_add=True)),
-                ('deadline', models.DateTimeField(validators=[homework.models.validate_deadline])),
+                ('deadline', models.DateTimeField()),
                 ('text', models.TextField()),
                 ('files', models.FileField(blank=True, upload_to='', validators=[django.core.validators.FileExtensionValidator('image/png', 'image/jpeg', 'application/zip')])),
                 ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
