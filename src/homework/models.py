@@ -42,5 +42,4 @@ class Solution(models.Model):
             ]),
             FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
         ],
-        blank=True,
     )

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.utils import timezone
 
 from common.serializers import CurrentUserProfileDefault
 from . import models
@@ -21,3 +22,8 @@ class SolutionSerializer(serializers.ModelSerializer):
         model = models.Solution
         read_only_fields = ('created_by', 'date' 'ready')
         fields = ('task', 'date', 'accepted', 'files', 'created_by')
+
+    def validate(self, data):
+        if timezone.now() > data['task'].deadline:
+            raise serializers.ValidationError('You late.')
+        return data
