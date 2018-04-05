@@ -6,22 +6,12 @@ from account.models import Profile
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=150)
-    date = models.DateTimeField(auto_now_add=True, editable=False)
-    deadline = models.DateTimeField()
-    text = models.TextField()
     created_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
-    files = models.FileField(
-        validators=[
-            validators.FileExtensionValidator([
-                'image/png',
-                'image/jpeg',
-                'application/zip',
-            ]),
-            FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
-        ],
-        blank=True,
-    )
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    title = models.CharField(max_length=150)
+    text = models.TextField()
+    deadline = models.DateTimeField()
 
     def __str__(self):
         return self.title
@@ -30,16 +20,21 @@ class Task(models.Model):
 class Solution(models.Model):
     task = models.ForeignKey(Task, related_name='task_solution', on_delete=models.CASCADE)
     created_by = models.ForeignKey(Profile, related_name='student_solution', on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
     ready = models.BooleanField(default=False)
     accepted = models.BooleanField(default=False)
     files = models.FileField(
         validators=[
             validators.FileExtensionValidator([
-                'image/png',
-                'image/jpeg',
+                'png',
+                'jpeg',
+                'jpg',
                 'zip',
             ]),
             FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
         ],
     )
+
+    def __str__(self):
+        return "[{}] {}".format(self.created_at, self.created_by.full_name)
