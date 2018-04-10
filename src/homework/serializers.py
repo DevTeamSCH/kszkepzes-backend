@@ -13,6 +13,11 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only_fields = ('created_by', 'created_at', 'updated_at')
         fields = '__all__'
 
+    def validate(self, data):
+        if timezone.now() >= data['deadline']:
+            raise serializers.ValidationError('Please, enter appropriate deadline.')
+        return data
+
 
 class SolutionSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
@@ -27,4 +32,5 @@ class SolutionSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if timezone.now() > data['task'].deadline:
             raise serializers.ValidationError('You late.')
+        data['accepted'] = False
         return data

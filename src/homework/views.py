@@ -15,3 +15,5 @@ class SolutionsViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SolutionSerializer
     queryset = models.Solution.objects.all()
     permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, )
+
+    # view
