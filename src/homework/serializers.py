@@ -32,5 +32,8 @@ class SolutionSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if timezone.now() > data['task'].deadline:
             raise serializers.ValidationError('You late.')
-        data['accepted'] = False
         return data
+
+    def create(self, validated_data):
+        validated_data['accepted'] = False
+        return self.Meta.model.objects.create(**validated_data)
