@@ -1,69 +1,40 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 from django.core import validators
-# from . import myfields
 
+from common.validators import FileSizeValidator
+from account.models import Profile
 
-# 5MB - 5242880
-__MAX_UPLOAD_SIZE = 5242880
-
-
-def validate_deadline(date):
-    if date <= timezone.now():
-        raise ValidationError(_('Date must be greater than now'), code='invalid')
-
-
-# def validate_file_size(file):
-#     if file._size > __MAX_UPLOAD_SIZE:
-#         raise ValidationError(_('Please keep filesize under' + __MAX_UPLOAD_SIZE))
 
 class Task(models.Model):
+    created_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
     title = models.CharField(max_length=150)
-    date = models.DateTimeField(auto_now_add=True, editable=False)
-    deadline = models.DateTimeField(validators=[validate_deadline])
     text = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    files = models.FileField(
-        validators=[validators.FileExtensionValidator(
-            'image/png',
-            'image/jpeg',
-            'application/zip',
-        )],
-        blank=True,
-    )
-    # files = myfields.RestrictedFileField(
-    #     content_types=['image/png', 'image/jpeg', 'application/zip'],
-    #     max_upload_size=MAX_UPLOAD_SIZE,
-    #     blank=True,
-    #     null=True,
-    # )
-#    solution_file = models.BooleanField()
-#
-#    def clean(self):
-#        if self.deadline <= timezone.now():
-#            raise ValidationError(_('Invalid date'), code='invalid')
+    deadline = models.DateTimeField()
+    # dokumentum kezeles
+
+    def __str__(self):
+        return self.title
 
 
 class Solution(models.Model):
     task = models.ForeignKey(Task, related_name='task_solution', on_delete=models.CASCADE)
-    # student = models.ForeignKey(account.models.Profile, related_name='student_solution',  on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True, editable=False)
-    ready = models.BooleanField(default=False)  # if(Soulution.date <= Task.deadline)
-    accepted = models.BooleanField(default=False)
+    created_by = models.ForeignKey(Profile, related_name='student_solution', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    accepted = models.BooleanField()
     files = models.FileField(
-        validators=[validators.FileExtensionValidator(
-            'image/png',
-            'image/jpeg',
-            'application/zip',
-        )],
-        blank=True,
+        validators=[
+            validators.FileExtensionValidator([
+                'png',
+                'jpeg',
+                'jpg',
+                'zip',
+            ]),
+            FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
+        ],
     )
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    # files = myfields.RestrictedFileField(
-    #     content_types=['image/png', 'image/jpeg', 'application/zip'],
-    #     max_upload_size=MAX_UPLOAD_SIZE,
-    #     blank=True,
-    # )
+
+    def __str__(self):
+        return "[{}] {}".format(self.created_at, self.created_by.full_name)
