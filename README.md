@@ -13,7 +13,7 @@
 
 1. python3 -m venv venv
 2. source venv/bin/activate
-3. mv environment.sh.example environment.sh
+3. cp environment.sh.example environment.sh
 4. Ki kell tölteni a környezeti változókat.
 5. source environment.sh
 6. pip install -r requirements/development.txt
