@@ -15,7 +15,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.has_perm(permissions.IsAdminUser):
             return models.Profile.objects.all()
-
         return models.Profile.objects.filter(pk=user.profile.id)
 
     @list_route(methods=['get'])
