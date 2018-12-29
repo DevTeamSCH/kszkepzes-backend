@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^api/v1/', include('stats.urls')),
     url(r'^api/v1/', include('account.urls')),
     url(r'^api/v1/', include('news.urls')),
+    url(r'^api/v1/', include('document.urls')),
     url(r'^api/v1/logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
 

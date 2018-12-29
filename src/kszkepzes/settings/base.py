@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'account',
     'stats',
     'news',
+    'document',
 ]
 
 MIDDLEWARE = [
