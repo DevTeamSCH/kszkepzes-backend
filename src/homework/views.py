@@ -18,10 +18,10 @@ class SolutionsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = models.Solution.objects.filter(created_by=user)
+        queryset = models.Solution.objects.filter(created_by=user.profile)
         if user.has_perm(permissions.IsStaffUser):
             queryset = models.Solution.objects.all()
-            user_id = self.request.query_params.get('userID', None)
-            if user_id is not None:
-                queryset = queryset.filter(created_by=user_id)
+            profile_id = self.request.query_params.get('profileID', None)
+            if profile_id is not None:
+                queryset = queryset.filter(created_by=profile_id)
         return queryset
