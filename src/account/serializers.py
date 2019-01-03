@@ -12,6 +12,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     groups = serializers.SlugRelatedField(many=True, slug_field="choice", queryset=models.GroupChoice.objects.all())
     updated_at = serializers.DateTimeField(read_only=True)
     signed = serializers.BooleanField()
+    full_name = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Profile
@@ -26,6 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'motivation_about',
             'motivation_profession',
             'motivation_exercise',
+            'full_name'
         )
 
     def validate(self, data):
@@ -37,3 +39,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You cannot join after the deadline")
 
         return data
+
+    def get_full_name(self, obj):
+        return obj.full_name
