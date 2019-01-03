@@ -12,5 +12,6 @@ class CurrentUserMiddleware(object):
         _profile.value = request.user
         return self.get_response(request)
 
-    def get_current_profile():
+    #@property
+    def get_current_user_profile():
         return _profile.value.profile
