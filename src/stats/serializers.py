@@ -29,5 +29,5 @@ class NoteSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('created_at', 'update_at', 'created_by')
 
-    def get_creted_by_name(self, obj):
+    def get_created_by_name(self, obj):
         return obj.created_by.full_name
