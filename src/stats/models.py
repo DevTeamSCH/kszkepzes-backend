@@ -12,10 +12,6 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
-    def clean(self):
-        if self.date > timezone.now():
-            raise ValidationError('Invalid date')
-
     def __str__(self):
         return self.name
 
