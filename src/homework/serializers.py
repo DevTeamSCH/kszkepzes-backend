@@ -27,7 +27,16 @@ class SolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Solution
         read_only_fields = ('created_by', 'created_at', 'updated_at', 'ready')
-        fields = ('task', 'created_at', 'updated_at', 'accepted', 'files', 'created_by')
+        fields = (
+            'task',
+            'created_at',
+            'updated_at',
+            'accepted',
+            'files',
+            'created_by',
+            'corrected',
+            'note',
+        )
 
     def validate(self, data):
         if timezone.now() > data['task'].deadline:
@@ -36,4 +45,6 @@ class SolutionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['accepted'] = False
+        validated_data['corrected'] = False
+        validated_data['note'] = ''
         return self.Meta.model.objects.create(**validated_data)

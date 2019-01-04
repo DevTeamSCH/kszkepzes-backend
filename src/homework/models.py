@@ -23,7 +23,9 @@ class Solution(models.Model):
     created_by = models.ForeignKey(Profile, related_name='student_solution', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+    note = models.TextField()
     accepted = models.BooleanField()
+    corrected = models.BooleanField()
     files = models.FileField(
         validators=[
             validators.FileExtensionValidator([
