@@ -19,6 +19,11 @@ class GroupChoice(models.Model):
 
 
 class Profile(models.Model):
+    ROLES = (
+        ('Staff', 'Staff'),
+        ('Applicant', 'Applicant'),
+        ('Student', 'Student'),
+    )
     join_date = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
@@ -29,6 +34,7 @@ class Profile(models.Model):
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
     groups = models.ManyToManyField(GroupChoice, related_name='profiles')
+    role = models.CharField(max_length=10, choices=ROLES, default='Applicant', unique=True)
 
     @property
     def full_name(self):

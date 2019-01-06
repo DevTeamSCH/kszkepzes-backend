@@ -20,7 +20,7 @@ class Task(models.Model):
 
 class Solution(models.Model):
     task = models.ForeignKey(Task, related_name='task_solution', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(Profile, related_name='student_solution', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(Profile, related_name='student_solution', on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     note = models.TextField()

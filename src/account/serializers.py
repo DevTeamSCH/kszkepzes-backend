@@ -16,6 +16,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Profile
+        read_only_fields = ('role', )
         fields = (
             'id',
             'join_date',
@@ -27,7 +28,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'motivation_about',
             'motivation_profession',
             'motivation_exercise',
-            'full_name'
+            'full_name',
+            'role',
         )
 
     def validate(self, data):
