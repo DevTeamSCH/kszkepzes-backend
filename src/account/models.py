@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from solo.models import SingletonModel
-
+from common.middleware import CurrentUserMiddleware
 
 class GroupChoice(models.Model):
     TEAMS = (
@@ -26,7 +26,11 @@ class Profile(models.Model):
     )
     join_date = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
-    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User,
+        related_name='profile',
+        on_delete=models.CASCADE,
+    )
     # TODO: Change the default to json render side
     motivation_about = models.TextField(blank=True, default='')
     motivation_profession = models.TextField(blank=True, default='')
@@ -34,7 +38,7 @@ class Profile(models.Model):
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
     groups = models.ManyToManyField(GroupChoice, related_name='profiles')
-    role = models.CharField(max_length=10, choices=ROLES, default='Applicant', unique=True)
+    role = models.CharField(max_length=10, choices=ROLES, default='Applicant',)
 
     @property
     def full_name(self):

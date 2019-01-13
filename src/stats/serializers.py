@@ -31,3 +31,8 @@ class NoteSerializer(serializers.ModelSerializer):
 
     def get_created_by_name(self, obj):
         return obj.created_by.full_name
+
+    def validate(self, data):
+        if data['profile'] is None and data['event'] is None:
+            raise serializers.ValidationError('You have to add profile or event')
+        return data

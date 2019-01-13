@@ -10,7 +10,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Document
-        fields = ('uploaded_by', 'uploaded_at', 'name', 'description', 'file')
+        fields = ('uploaded_by', 'uploaded_at', 'name', 'description', 'file', 'uploaded_by_name', 'solution', )
 
     def get_uploaded_by_name(self, obj):
         return obj.uploaded_by.full_name

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from account import models
+from common.middleware import CurrentUserMiddleware
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -9,19 +10,17 @@ class ChoiceSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    groups = serializers.SlugRelatedField(many=True, slug_field="choice", queryset=models.GroupChoice.objects.all())
+    groups = serializers.SlugRelatedField(many=True, slug_field='choice', queryset=models.GroupChoice.objects.all())
     updated_at = serializers.DateTimeField(read_only=True)
     signed = serializers.BooleanField()
     full_name = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Profile
-        read_only_fields = ('role', )
         fields = (
             'id',
             'join_date',
             'updated_at',
-            'user',
             'nick',
             'signed',
             'groups',
@@ -34,12 +33,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         deadline = models.Deadline.get_solo().deadline
-        if deadline is None:
-            return data
-
-        if data['signed'] is True and data['updated_at'] > deadline:
+        if data['signed'] is False:
+            raise serializers.ValidationError("You cannot join without signed")
+        if deadline is not None and data['updated_at'] > deadline:
             raise serializers.ValidationError("You cannot join after the deadline")
-
+        modifier_role = CurrentUserMiddleware.get_current_user_profile().role
+        role = data['role']
+        if role is not None and modifier_role != 'Staff':
+            raise serializers.ValidationError("You don't have permission to change role")
         return data
 
     def get_full_name(self, obj):

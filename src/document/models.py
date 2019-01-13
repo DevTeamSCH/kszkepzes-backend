@@ -2,6 +2,7 @@ from django.db import models
 from django.core import validators
 
 from account.models import Profile
+from homework.models import Solution
 from common.validators import FileSizeValidator
 
 
@@ -10,7 +11,7 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
     name = models.CharField(max_length=150)
     description = models.TextField()
-    files = models.FileField(
+    file = models.FileField(
         validators=[
             validators.FileExtensionValidator([
                 'png',
@@ -21,6 +22,7 @@ class Document(models.Model):
             FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
         ],
     )
+    solution = models.ForeignKey(Solution, related_name='files', on_delete=models.DO_NOTHING, blank=True, null=True,)
 
     def __str__(self):
         return self.name

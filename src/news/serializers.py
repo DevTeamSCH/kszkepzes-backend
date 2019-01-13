@@ -6,6 +6,7 @@ from common.serializers import CurrentUserProfileDefault
 class ArticleSerializer(serializers.ModelSerializer):
     updated_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     last_update_by = serializers.SerializerMethodField()
+    author = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
@@ -13,4 +14,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_last_update_by(self, obj):
-        return obj.updated_by.id
+        return obj.updated_by.full_name
+
+    def get_author(self, obj):
+        return obj.author.full_name

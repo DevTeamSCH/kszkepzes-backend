@@ -8,4 +8,4 @@ def create_profile(backend, user, response, *args, **kwargs):
         try:
             user.profile
         except exceptions.ObjectDoesNotExist:
-            models.Profile.objects.create(user=user)
+            models.Profile.objects.create(user=user, )

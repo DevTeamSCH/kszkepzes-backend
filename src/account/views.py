@@ -14,6 +14,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user.has_perm(permissions.IsAdminUser):
+            role = self.request.query_params.get("role", None)
+            if role is not None:
+                return models.Profile.objects.filter(role=role)
             return models.Profile.objects.all()
         return models.Profile.objects.filter(pk=user.profile.id)
 
