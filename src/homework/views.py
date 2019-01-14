@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 
-from rest_framework.permissions import IsAuthenticated
 from . import serializers
 from . import models
 from common import permissions
@@ -14,7 +13,7 @@ class TasksViewSet(viewsets.ModelViewSet):
 
 class SolutionsViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SolutionSerializer
-    permission_classes = (permissions.IsStaffOrStudent, permissions.StudentJustCreate)
+    permission_classes = (permissions.IsStaffOrStudent, )
 
     def get_queryset(self):
         user = self.request.user

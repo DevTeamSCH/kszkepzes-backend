@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from common.serializers import CurrentUserProfileDefault
 from . import models
+from common.middleware import CurrentUserMiddleware
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -35,10 +36,7 @@ class SolutionSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if timezone.now() > data['task'].deadline:
             raise serializers.ValidationError('You late.')
+        profile = CurrentUserMiddleware.get_current_user_profile()
+        if profile.role != 'Staff' and (data['accepted'] or data['corrected'] or data['note'] != ''):
+            raise serializers.ValidationError("You don't have permission!")
         return data
-
-    def create(self, validated_data):
-        validated_data['accepted'] = False
-        validated_data['corrected'] = False
-        validated_data['note'] = ''
-        return self.Meta.model.objects.create(**validated_data)

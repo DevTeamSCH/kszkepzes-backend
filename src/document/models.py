@@ -10,7 +10,7 @@ class Document(models.Model):
     uploaded_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
     name = models.CharField(max_length=150)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='', )
     file = models.FileField(
         validators=[
             validators.FileExtensionValidator([
