@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import Profile
+from common.middleware import CurrentUserMiddleware
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
@@ -7,8 +8,18 @@ from django.core.exceptions import ValidationError
 class Event(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateTimeField(null=False)
-    visitors = models.ManyToManyField(Profile, related_name='visitor')
-    created_by = models.ForeignKey(Profile, related_name='created_event', on_delete=models.DO_NOTHING)
+    visitors = models.ManyToManyField(
+        Profile,
+        related_name='events',
+        blank=True,
+        null=True,
+    )
+    created_by = models.ForeignKey(
+        Profile,
+        related_name='created_event',
+        on_delete=models.DO_NOTHING,
+        default=CurrentUserMiddleware.get_current_user_profile,
+    )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -20,7 +31,12 @@ class Note(models.Model):
     event = models.ForeignKey(Event, related_name='notes', on_delete=models.CASCADE, blank=True, null=True,)
     profile = models.ForeignKey(Profile, related_name='notes', on_delete=models.CASCADE, blank=True, null=True,)
     note = models.TextField()
-    created_by = models.ForeignKey(Profile, related_name='created_notes', on_delete=models.DO_NOTHING)
+    created_by = models.ForeignKey(
+        Profile,
+        related_name='created_notes',
+        on_delete=models.DO_NOTHING,
+        default=CurrentUserMiddleware.get_current_user_profile,
+    )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 

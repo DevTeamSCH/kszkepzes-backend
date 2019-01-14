@@ -4,9 +4,9 @@ from . import models
 
 
 class EventSerializer(serializers.ModelSerializer):
-    created_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     created_by_name = serializers.SerializerMethodField()
     visitor_number = serializers.SerializerMethodField()
+    # visitors = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Event
@@ -18,6 +18,9 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_visitor_number(self, obj):
         return obj.visitors.all().count()
+
+    # def get_visitors(self, obj):
+    #     return obj.visitors.all()
 
 
 class NoteSerializer(serializers.ModelSerializer):
