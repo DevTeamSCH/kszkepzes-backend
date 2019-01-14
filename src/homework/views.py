@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 
-from common import permissions
 from rest_framework.permissions import IsAuthenticated
 from . import serializers
 from . import models
+from common import permissions
 
 
 class TasksViewSet(viewsets.ModelViewSet):
@@ -14,12 +14,12 @@ class TasksViewSet(viewsets.ModelViewSet):
 
 class SolutionsViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SolutionSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (permissions.IsStaffOrStudent, permissions.StudentJustCreate)
 
     def get_queryset(self):
         user = self.request.user
         queryset = models.Solution.objects.filter(created_by=user.profile)
-        if user.has_perm(permissions.IsStaffUser):
+        if user.profile.role == 'Staff':
             queryset = models.Solution.objects.all()
             profile_id = self.request.query_params.get('profileID', None)
             if profile_id is not None:

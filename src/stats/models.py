@@ -12,7 +12,6 @@ class Event(models.Model):
         Profile,
         related_name='events',
         blank=True,
-        null=True,
     )
     created_by = models.ForeignKey(
         Profile,
