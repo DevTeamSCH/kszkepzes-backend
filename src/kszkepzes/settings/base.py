@@ -158,3 +158,7 @@ STATIC_URL = '/django-static/'
 
 MEDIA_ROOT = os.getenv('MEDIA_ROOT', '/tmp')
 MEDIA_URL = '/media/'
+
+EMAIL_HOST = 'mail.sch.bme.hu'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
