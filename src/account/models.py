@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from solo.models import SingletonModel
 from common.middleware import CurrentUserMiddleware
 
+
 class GroupChoice(models.Model):
     TEAMS = (
         ('DT', 'DevTeam'),
@@ -37,8 +38,8 @@ class Profile(models.Model):
     motivation_exercise = models.TextField(blank=True, default='')
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
-    groups = models.ManyToManyField(GroupChoice, related_name='profiles')
-    role = models.CharField(max_length=10, choices=ROLES, default='Applicant',)
+    groups = models.ManyToManyField(GroupChoice, related_name='profiles', blank=True)
+    role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
 
     @property
     def full_name(self):

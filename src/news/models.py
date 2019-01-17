@@ -8,7 +8,7 @@ class Article(models.Model):
         Profile,
         related_name="author",
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile,
+        default=CurrentUserMiddleware.get_current_user_profile
     )
     title = models.CharField(null=False, max_length=200)
     text = models.TextField()
@@ -17,7 +17,7 @@ class Article(models.Model):
     updated_by = models.ForeignKey(
         Profile,
         related_name="updater",
-        on_delete=models.DO_NOTHING,
+        on_delete=models.DO_NOTHING
     )
 
     def __str__(self):

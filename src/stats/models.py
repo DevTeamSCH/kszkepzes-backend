@@ -11,13 +11,13 @@ class Event(models.Model):
     visitors = models.ManyToManyField(
         Profile,
         related_name='events',
-        blank=True,
+        blank=True
     )
     created_by = models.ForeignKey(
         Profile,
         related_name='created_event',
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile,
+        default=CurrentUserMiddleware.get_current_user_profile
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -27,14 +27,14 @@ class Event(models.Model):
 
 
 class Note(models.Model):
-    event = models.ForeignKey(Event, related_name='notes', on_delete=models.CASCADE, blank=True, null=True,)
-    profile = models.ForeignKey(Profile, related_name='notes', on_delete=models.CASCADE, blank=True, null=True,)
+    event = models.ForeignKey(Event, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
+    profile = models.ForeignKey(Profile, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
     note = models.TextField()
     created_by = models.ForeignKey(
         Profile,
         related_name='created_notes',
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile,
+        default=CurrentUserMiddleware.get_current_user_profile
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)

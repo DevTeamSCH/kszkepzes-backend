@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.utils import timezone
 
-from common.serializers import CurrentUserProfileDefault
 from . import models
 from common.middleware import CurrentUserMiddleware
 
