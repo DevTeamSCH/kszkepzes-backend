@@ -11,4 +11,5 @@ def create_profile(backend, user, response, *args, **kwargs):
         except exceptions.ObjectDoesNotExist:
             models.Profile.objects.create(user=user)
             if user.email is not None:
-                send_mail('TESZT', 'Attiss meleg!4!!', 'noreply@devteam.sch.bme.hu', [user.email, ])
+                send_mail('TESZT', 'Udvozlunk a kszkepzesen, ne felejtsd el kitolteni a profilod.',
+                          'noreply@devteam.sch.bme.hu', [user.email, ])
