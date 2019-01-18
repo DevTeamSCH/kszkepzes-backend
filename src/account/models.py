@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from solo.models import SingletonModel
-from common.middleware import CurrentUserMiddleware
 
 
 class GroupChoice(models.Model):
