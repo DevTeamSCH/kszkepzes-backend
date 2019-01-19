@@ -6,6 +6,32 @@ from . import serializers
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
-    queryset = models.Document.objects.all()
     serializer_class = serializers.DocumentSerializer
     permission_classes = (permissions.IsStaffOrStudent, )
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.profile.role == 'Staff':
+            queryset = self.staff_queryset()
+        else:
+            queryset = self.student_queryset(user.profile)
+        return queryset
+
+    def staff_queryset(self):
+        queryset = models.Document.objects.all()
+        profile_id = self.request.query_params.get('profileID', None)
+        solution_id = self.request.query_params.get('solutionID', None)
+        if profile_id is not None and solution_id is not None:
+            return queryset.filter(uploaded_by=profile_id, solution=solution_id)
+        if profile_id is not None:
+            return queryset.filter(uploaded_by=profile_id)
+        if solution_id is not None:
+            return queryset.filter(solution=solution_id)
+        return queryset
+
+    def student_queryset(self, profile):
+        queryset = models.Document.objects.filter(uploaded_by=profile)
+        solution_id = self.request.query_params.get('solutionID', None)
+        if solution_id is not None:
+            return queryset.filter(solution=solution_id)
+        return queryset
