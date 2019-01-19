@@ -26,3 +26,9 @@ REST_FRAMEWORK = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.sch.bme.hu'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
