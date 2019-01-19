@@ -1,13 +1,19 @@
 from rest_framework import viewsets
 from . import models
 from . import serializers
-from common.permissions import IsStaffUser, IsStaffOrReadOnlyForAuthenticated
+from common.permissions import IsStaffUser, IsStaffOrStudent
 
 
-class EventViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.EventSerializer
+class StaffEventViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.StaffEventSerializer
     queryset = models.Event.objects.all()
-    permission_classes = (IsStaffOrReadOnlyForAuthenticated, )
+    permission_classes = (IsStaffUser, )
+
+
+class StudentEventViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.StudentEventSerializer
+    queryset = models.Event.objects.all()
+    permission_classes = (IsStaffOrStudent, )
 
 
 class NoteViewSet(viewsets.ModelViewSet):

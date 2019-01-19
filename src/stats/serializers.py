@@ -3,7 +3,7 @@ from common.serializers import CurrentUserProfileDefault
 from . import models
 
 
-class EventSerializer(serializers.ModelSerializer):
+class StaffEventSerializer(serializers.ModelSerializer):
     created_by_name = serializers.SerializerMethodField()
     visitor_number = serializers.SerializerMethodField()
 
@@ -17,6 +17,13 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_visitor_number(self, obj):
         return obj.visitors.all().count()
+
+
+class StudentEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Event
+        fields = ('name', 'date', 'description', )
+        read_only_fields = ('name', 'date', 'description', )
 
 
 class NoteSerializer(serializers.ModelSerializer):

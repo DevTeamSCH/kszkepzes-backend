@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 class Event(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateTimeField(null=False)
+    description = models.TextField(blank=True, default='')
     visitors = models.ManyToManyField(
         Profile,
         related_name='events',
