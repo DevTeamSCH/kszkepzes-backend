@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django.utils import timezone
-
+from account.models import Profile
 from . import models
+from common.email import new_homework
 from common.middleware import CurrentUserMiddleware
 
 
@@ -15,6 +16,11 @@ class TaskSerializer(serializers.ModelSerializer):
         if timezone.now() >= data['deadline']:
             raise serializers.ValidationError('Please, enter appropriate deadline.')
         return data
+
+    def create(self, validated_data):
+        emails = Profile.objects.filter(role="Student").exclude(user__email='').values_list('user__email', flat=True)
+        new_homework(emails)
+        return self.Meta.model.objects.create(**validated_data)
 
 
 class SolutionSerializer(serializers.ModelSerializer):

@@ -20,7 +20,8 @@ class Document(models.Model):
                 'zip',
             ]),
             FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
-        ]
+        ],
+        blank=True,
     )
     solution = models.ForeignKey(Solution, related_name='files', on_delete=models.DO_NOTHING, blank=True, null=True)
 

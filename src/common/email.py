@@ -19,11 +19,11 @@ def denied(email):
     send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
 
 
-def new_homework(email):
+def new_homework(emails):
     subject = "NEW HOMEWORK TEST"
     message = "Szia!\nEgy új házi lett kiadva, ha tíz percen belül megoldod akkor fasza gyerek vagy," \
               " ha nem életed végéig bánnifogod..."
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
+    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', emails)
 
 
 def homework_corrected(email):

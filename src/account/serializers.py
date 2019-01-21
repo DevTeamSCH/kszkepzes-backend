@@ -31,17 +31,28 @@ class ProfileSerializer(serializers.ModelSerializer):
             'role',
         )
 
-    def validate(self, data):
+    def validate_updated_at(self, value):
         deadline = models.Deadline.get_solo().deadline
-        if data['signed'] is False:
-            raise serializers.ValidationError("You cannot join without signed")
-        if deadline is not None and data['updated_at'] > deadline:
+        if deadline is not None and value > deadline:
             raise serializers.ValidationError("You cannot join after the deadline")
+        return value
+
+    def validate_role(self, value):
         modifier_role = CurrentUserMiddleware.get_current_user_profile().role
-        role = data['role']
-        if role is not None and modifier_role != 'Staff':
-            raise serializers.ValidationError("You don't have permission to change role")
-        return data
+        if value != modifier_role and modifier_role != "Staff":
+            raise serializers.ValidationError("You don't have permission change role")
+        return value
+
+    def validate_signed(self, value):
+        if value is False:
+            raise serializers.ValidationError("You cannot join without signed")
+        return value
+
+    def validate_id(self, value):
+        modifier= CurrentUserMiddleware.get_current_user_profile()
+        if value != modifier.id and modifier.role != "Staff":
+            raise serializers.ValidationError("You don't have permission")
+        return value
 
     def get_full_name(self, obj):
         return obj.full_name
