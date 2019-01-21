@@ -31,8 +31,8 @@ class Solution(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     note = models.TextField(blank=True, default='')
-    accepted = models.BooleanField()
-    corrected = models.BooleanField()
+    accepted = models.BooleanField(blank=True, default=False)
+    corrected = models.BooleanField(blank=True, default=False)
 
     def __str__(self):
         return "[{}] {}".format(self.created_at, self.created_by.full_name)

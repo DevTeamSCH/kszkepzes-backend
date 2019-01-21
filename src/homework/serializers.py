@@ -2,8 +2,9 @@ from rest_framework import serializers
 from django.utils import timezone
 from account.models import Profile
 from . import models
-from common.email import new_homework
+from common import email
 from common.middleware import CurrentUserMiddleware
+from common.email import homework_corrected
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -19,7 +20,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         emails = Profile.objects.filter(role="Student").exclude(user__email='').values_list('user__email', flat=True)
-        new_homework(emails)
+        email.new_homework(emails)
         return self.Meta.model.objects.create(**validated_data)
 
 

@@ -44,7 +44,8 @@ class ProfileSerializer(serializers.ModelSerializer):
         return value
 
     def validate_signed(self, value):
-        if value is False:
+        modifier = CurrentUserMiddleware.get_current_user_profile()
+        if value is False and modifier.role != "Staff":
             raise serializers.ValidationError("You cannot join without signed")
         return value
 
