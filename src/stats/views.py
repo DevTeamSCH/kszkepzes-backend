@@ -6,13 +6,13 @@ from common.permissions import IsStaffUser, IsStaffOrStudent
 
 class StaffEventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.StaffEventSerializer
-    queryset = models.Event.objects.all()
+    queryset = models.Event.objects.all().order_by('date')
     permission_classes = (IsStaffUser, )
 
 
 class StudentEventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.StudentEventSerializer
-    queryset = models.Event.objects.all()
+    queryset = models.Event.objects.all().order_by('date')
     permission_classes = (IsStaffOrStudent, )
 
 
@@ -31,3 +31,4 @@ class NoteViewSet(viewsets.ModelViewSet):
         if event_id is not None:
             return queryset.filter(event=event_id)
         return queryset
+
