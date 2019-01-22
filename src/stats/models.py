@@ -1,8 +1,6 @@
 from django.db import models
 from account.models import Profile
 from common.middleware import CurrentUserMiddleware
-from django.utils import timezone
-from django.core.exceptions import ValidationError
 
 
 class Event(models.Model):
@@ -11,7 +9,12 @@ class Event(models.Model):
     description = models.TextField(blank=True, default='')
     visitors = models.ManyToManyField(
         Profile,
-        related_name='events',
+        related_name='events_visitor',
+        blank=True
+    )
+    absent = models.ManyToManyField(
+        Profile,
+        related_name='events_absent',
         blank=True
     )
     created_by = models.ForeignKey(
