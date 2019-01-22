@@ -4,7 +4,6 @@ from account.models import Profile
 from . import models
 from common import email
 from common.middleware import CurrentUserMiddleware
-from common.email import homework_corrected
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -39,10 +38,18 @@ class SolutionSerializer(serializers.ModelSerializer):
             'note',
         )
 
-    def validate(self, data):
-        if timezone.now() > data['task'].deadline:
+    def validate_task(self, value):
+        if timezone.now() > value.deadline:
             raise serializers.ValidationError('You late.')
+        return value
+
+    def validate(self, data):
         profile = CurrentUserMiddleware.get_current_user_profile()
         if profile.role != 'Staff' and (data['accepted'] or data['corrected'] or data['note'] != ''):
             raise serializers.ValidationError("You don't have permission!")
         return data
+
+    def update(self, instance, validated_data):
+        if instance.corrected == False and validated_data.get('corrected', instance.corrected) == True:
+            email.homework_corrected(instance.created_by.user.email)
+        return super().update(instance, validated_data)

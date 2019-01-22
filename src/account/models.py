@@ -23,6 +23,7 @@ class Profile(models.Model):
         ('Staff', 'Staff'),
         ('Applicant', 'Applicant'),
         ('Student', 'Student'),
+        ('Denied', 'Denied'),
     )
     join_date = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
