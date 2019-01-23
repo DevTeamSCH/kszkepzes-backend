@@ -44,11 +44,23 @@ class SolutionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('You late.')
         return value
 
-    def validate(self, data):
+    def validate_accepted(self, value):
         profile = CurrentUserMiddleware.get_current_user_profile()
-        if profile.role != 'Staff' and (data['accepted'] or data['corrected'] or data['note'] != ''):
-            raise serializers.ValidationError("You don't have permission!")
-        return data
+        if profile.role != 'Staff' and value:
+            raise serializers.ValidationError("You don't have permission to modify accepted!")
+        return value
+
+    def validate_corrected(self, value):
+        profile = CurrentUserMiddleware.get_current_user_profile()
+        if profile.role != 'Staff' and value:
+            raise serializers.ValidationError("You don't have permission to modify corrected!")
+        return value
+
+    def validate_note(self, value):
+        profile = CurrentUserMiddleware.get_current_user_profile()
+        if profile.role != 'Staff' and value != '':
+            raise serializers.ValidationError("You don't have permission to create note!")
+        return value
 
     def update(self, instance, validated_data):
         if instance.corrected == False and validated_data.get('corrected', instance.corrected) == True:

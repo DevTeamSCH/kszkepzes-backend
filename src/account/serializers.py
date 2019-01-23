@@ -49,12 +49,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         if value is False and modifier.role != "Staff":
             raise serializers.ValidationError("You cannot join without signed")
         return value
-    #
-    # def validate_id(self, value):
-    #     modifier= CurrentUserMiddleware.get_current_user_profile()
-    #     if value != modifier.id and modifier.role != "Staff":
-    #         raise serializers.ValidationError("You don't have permission")
-    #     return value
 
     def update(self, instance, validated_data):
         new_role = validated_data.get('role', instance.role)

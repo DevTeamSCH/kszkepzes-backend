@@ -17,11 +17,12 @@ class DocumentSerializer(serializers.ModelSerializer):
     def get_uploaded_by_name(self, obj):
         return obj.uploaded_by.full_name
 
-    def validate(self, data):
+    def validate_solution(self, value):
         profile = CurrentUserMiddleware.get_current_user_profile()
-        if data['solution'] not in profile.solution.all():
+        if value not in profile.solution.all():
             raise serializers.ValidationError('You dont have permission!')
-        count = models.Document.objects.filter(uploaded_by=profile, solution=data['solution']).count()
+        count = models.Document.objects.filter(uploaded_by=profile, solution=value).count()
         if count >= _max_count:
-            raise serializers.ValidationError('You cant upload more than ' + str(_max_count) + ' document to one solution!')
-        return data
+            raise serializers.ValidationError('You cant upload more than ' + str(_max_count) +
+                                              ' document to one solution!')
+        return value
