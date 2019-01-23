@@ -1,8 +1,9 @@
 from rest_framework import serializers
-
 from common.serializers import CurrentUserProfileDefault
 from . import models
 from common.middleware import CurrentUserMiddleware
+
+_max_count = 5
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -20,4 +21,7 @@ class DocumentSerializer(serializers.ModelSerializer):
         profile = CurrentUserMiddleware.get_current_user_profile()
         if data['solution'] not in profile.solution.all():
             raise serializers.ValidationError('You dont have permission!')
+        count = models.Document.objects.filter(uploaded_by=profile, solution=data['solution']).count()
+        if count >= _max_count:
+            raise serializers.ValidationError('You cant upload more than ' + str(_max_count) + ' document to one solution!')
         return data

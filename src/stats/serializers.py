@@ -18,12 +18,18 @@ class StaffEventSerializer(serializers.ModelSerializer):
     def get_visitor_number(self, obj):
         return obj.visitors.all().count()
 
+    def validate(self, data):
+        for i in data['absent']:
+            if i in data['visitors']:
+                raise serializers.ValidationError('You cant add a student to absent and visitor in the same time.')
+        return data
+
 
 class StudentEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
-        fields = ('name', 'date', 'description', )
-        read_only_fields = ('name', 'date', 'description', )
+        fields = ('id', 'name', 'date', 'description', )
+        read_only_fields = ('id', 'name', 'date', 'description', )
 
 
 class NoteSerializer(serializers.ModelSerializer):

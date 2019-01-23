@@ -28,6 +28,7 @@ class SolutionSerializer(serializers.ModelSerializer):
         model = models.Solution
         read_only_fields = ('created_by', 'created_at', 'updated_at', 'ready', 'files')
         fields = (
+            'id',
             'task',
             'created_at',
             'updated_at',

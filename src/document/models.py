@@ -23,7 +23,7 @@ class Document(models.Model):
         ],
         blank=True,
     )
-    solution = models.ForeignKey(Solution, related_name='files', on_delete=models.DO_NOTHING, blank=True, null=True)
+    solution = models.ForeignKey(Solution, related_name='files', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
