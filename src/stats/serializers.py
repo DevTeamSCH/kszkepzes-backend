@@ -19,7 +19,7 @@ class StaffEventSerializer(serializers.ModelSerializer):
         return obj.visitors.all().count()
 
     def validate(self, data):
-        if data['absent'] is not None and data['visitors'] is not None:
+        if 'absent' in data and 'visitors' in data:
             for i in data['absent']:
                 if i in data['visitors']:
                     raise serializers.ValidationError('You cant add a student to absent and visitor in the same time.')
