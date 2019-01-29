@@ -1,13 +1,14 @@
 from rest_framework import viewsets
-
 from common import permissions
 from . import models
 from . import serializers
+from rest_framework.parsers import JSONParser, MultiPartParser
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DocumentSerializer
     permission_classes = (permissions.IsStaffOrStudent, )
+    parser_classes = (JSONParser, MultiPartParser)
 
     def get_queryset(self):
         user = self.request.user

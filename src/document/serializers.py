@@ -3,7 +3,7 @@ from common.serializers import CurrentUserProfileDefault
 from . import models
 from common.middleware import CurrentUserMiddleware
 
-_max_count = 5
+_max_count = 1
 
 
 class DocumentSerializer(serializers.ModelSerializer):

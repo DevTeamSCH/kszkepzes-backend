@@ -9,7 +9,7 @@ from common.validators import FileSizeValidator
 class Document(models.Model):
     uploaded_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, blank=True, default='')
     description = models.TextField(blank=True, default='')
     file = models.FileField(
         validators=[
@@ -22,6 +22,7 @@ class Document(models.Model):
             FileSizeValidator(size_limit=52428800),  # 52428800 - 50MiB
         ],
         blank=True,
+        null=True
     )
     solution = models.ForeignKey(Solution, related_name='files', on_delete=models.CASCADE)
 
