@@ -8,7 +8,7 @@ from common import permissions
 class TasksViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TaskSerializer
     queryset = models.Task.objects.all()
-    permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, )
+    permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, permissions.IsStaffOrStudent )
 
 
 class SolutionsViewSet(viewsets.ModelViewSet):
