@@ -1,0 +1,7 @@
+﻿Kedves %(name)s!
+
+A(z) %(title)s című házi feladatod státusza %(status)s lett.
+Az alábbi linken tudod megtekinteni a részleteket: %(link)s  .
+
+Üdvözlettel:
+A mentorok

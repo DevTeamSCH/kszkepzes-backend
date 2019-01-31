@@ -18,8 +18,9 @@ class TaskSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        emails = Profile.objects.filter(role="Student").exclude(user__email='').values_list('user__email', flat=True)
-        email.new_homework(emails)
+        profiles = Profile.objects.filter(role="Student").exclude(user__email='')
+        for profile in profiles:
+            email.new_homework(profile.user, validated_data.get('deadline'))
         return self.Meta.model.objects.create(**validated_data)
 
 
@@ -64,10 +65,15 @@ class SolutionSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if instance.corrected == False and validated_data.get('corrected', instance.corrected) == True:
-            email.homework_corrected(instance.created_by.user.email)
+            email.homework_corrected(
+                instance.created_by.user,
+                instance.task.title,
+                validated_data.get('accepted', instance.accepted)
+            )
         return super().update(instance, validated_data)
 
     def create(self, validated_data):
         profile = CurrentUserMiddleware.get_current_user_profile()
         models.Solution.objects.filter(created_by=profile, task=validated_data['task']).delete()
         return super().create(validated_data)
+

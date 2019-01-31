@@ -1,5 +1,5 @@
 from django.core import exceptions
-from common.email import registration
+from common import email
 
 from . import models
 
@@ -11,4 +11,4 @@ def create_profile(backend, user, response, *args, **kwargs):
         except exceptions.ObjectDoesNotExist:
             models.Profile.objects.create(user=user)
             if user.email is not None:
-                registration(user.email)
+                email.registration(user)

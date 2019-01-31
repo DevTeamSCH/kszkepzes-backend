@@ -1,0 +1,7 @@
+﻿Kedves %(name)s!
+
+Új házi feladat került kiadásra, melyet az alábbi linken tudsz megtekinteni: %(link)s
+Határidő: %(deadline)s
+
+Sok sikert!
+A mentorok

@@ -54,9 +54,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         new_role = validated_data.get('role', instance.role)
         if instance.role != new_role:
             if new_role == 'Student':
-                email.admitted(instance.user.email)
+                email.admitted(instance.user)
             if new_role == 'Denied':
-                email.denied(instance.user.email)
+                email.denied(instance.user)
         return super().update(instance, validated_data)
 
     def get_full_name(self, obj):

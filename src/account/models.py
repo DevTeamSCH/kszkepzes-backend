@@ -30,7 +30,7 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User,
         related_name='profile',
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE
     )
     # TODO: Change the default to json render side
     motivation_about = models.TextField(blank=True, default='')
