@@ -1,32 +1,51 @@
 from django.core.mail import send_mail
+import codecs
+
+sender_email = 'noreply@kszkepzes.sch.bme.hu'
+link = 'kszkepzes.sch.bme.hu/homework'
 
 
-def registration(email):
-    subject = "REGISTRATION TEST"
-    message = "Üdvözlünk a kszképzésen!"
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
+def read_email(name):
+    with codecs.open('common/emails/' + name, 'r', 'utf-8') as myfile:
+        data = myfile.read()
+    return data
 
 
-def admitted(email):
-    subject = "ADMITTED TEST"
-    message = "Gratulálunk, te vagy a kiválasztott!!"
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
+def registration(user):
+    subject = "Kszképzés regisztráció"
+    message = read_email('registration.txt')
+    message = str.format(message %{'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
 
 
-def denied(email):
-    subject = "DENIED TEST"
-    message = "Sajnos idén nem nyertél felvételt, próbáld meg legközelebb"
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
+def admitted(user):
+    subject = "Jelentkezés eredménye"
+    message = read_email('admitted.txt')
+    message = str.format(message % {'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
 
 
-def new_homework(emails):
-    subject = "NEW HOMEWORK TEST"
-    message = "Szia!\nEgy új házi lett kiadva, ha tíz percen belül megoldod akkor fasza gyerek vagy," \
-              " ha nem életed végéig bánnifogod..."
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', emails)
+def denied(user):
+    subject = "Jelentkezés eredménye"
+    message = read_email('denied.txt')
+    message = str.format(message % {'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
 
 
-def homework_corrected(email):
-    subject = "HOMEWORK CORRECTED TEST"
-    message = "Nagyszerű mentoraink kijavították házifeladatod, vajon most kaptál meglepit?!"
-    send_mail(subject, message, 'noreply@devteam.sch.bme.hu', [email, ])
+def new_homework(user, deadline):
+    deadline = deadline.strftime('%Y-%m-%d %H:%M')
+    subject = "Új házifeladat"
+    message = read_email('new_homework.txt')
+    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
+    send_mail(subject, message, sender_email, [user.email, ])
+
+
+def homework_corrected(user, title, accepted):
+    subject = "Házifeladat eredménye"
+    if accepted:
+        status = 'Elfogadva'
+    else:
+        status = 'Hibás'
+    message = read_email('homework_corrected.txt')
+    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'status': status, 'title': title })
+    send_mail(subject, message, sender_email, [user.email, ])
