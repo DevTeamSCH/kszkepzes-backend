@@ -1,0 +1,6 @@
+﻿Kedves %(name)s!
+
+Sajnos - hely hiányában - idei képzésalkamunkon nem tudsz részt venni. Ne csüggedj, következő évben is indítunk ilyen programot, és ha addig is szorgalmasan tevékenykedsz, akkor biztosan be fogsz kerülni!
+
+Üdvözlettel:
+A mentorok

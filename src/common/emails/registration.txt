@@ -1,0 +1,10 @@
+﻿Kedves %(name)s!
+
+Örömmel vettük jelenkezésedet az idei KSZKépzés programunkba. Azonban ahhoz, hogy ezt el is tudjuk bírálni, még szükségünk van pár dologra tőled:
+	- ki kell töltened a profilodat,
+	- találsz pár feladatot is az oldalon, ezeket meg kell oldanod,
+	- gyere el Újoncdélutánunkra, erről majd még küldünk emailt.
+A feladatokhoz jó szórakozást kívánunk, és ne ijedj meg, ha valamit nem tudsz fejből, Google-t és egyéb segítséget természetesen használhatsz!
+
+Üdvözlettel:
+A mentorok

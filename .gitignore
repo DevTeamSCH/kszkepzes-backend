@@ -108,3 +108,6 @@ ENV/
 environment.sh
 environment.ps1
 environment.bat
+
+#PyCharm
+.idea/

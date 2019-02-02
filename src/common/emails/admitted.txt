@@ -1,0 +1,6 @@
+﻿Kedves %(name)s!
+
+Gratulálunk! Jelentkezésedet elfogadtuk! Innentől kezdve aktívan figyeld leveleidet, mert hamarosan megkapod az első képzésalkalmunkra szóló meghívódat!
+
+Üdvözlettel:
+A mentorok
