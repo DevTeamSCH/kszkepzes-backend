@@ -31,4 +31,3 @@ class NoteViewSet(viewsets.ModelViewSet):
         if event_id is not None:
             return queryset.filter(event=event_id)
         return queryset
-
