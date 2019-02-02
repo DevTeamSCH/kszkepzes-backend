@@ -14,7 +14,7 @@ def read_email(name):
 def registration(user):
     subject = "Kszképzés regisztráció"
     message = read_email('registration.txt')
-    message = str.format(message %{'name': user.get_full_name()})
+    message = str.format(message % {'name': user.get_full_name()})
     send_mail(subject, message, sender_email, [user.email, ])
 
 
@@ -47,5 +47,5 @@ def homework_corrected(user, title, accepted):
     else:
         status = 'Hibás'
     message = read_email('homework_corrected.txt')
-    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'status': status, 'title': title })
+    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'status': status, 'title': title})
     send_mail(subject, message, sender_email, [user.email, ])

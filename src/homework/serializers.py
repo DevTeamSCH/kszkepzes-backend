@@ -64,7 +64,7 @@ class SolutionSerializer(serializers.ModelSerializer):
         return value
 
     def update(self, instance, validated_data):
-        if instance.corrected == False and validated_data.get('corrected', instance.corrected) == True:
+        if instance.corrected is not True and validated_data.get('corrected', instance.corrected) is True:
             email.homework_corrected(
                 instance.created_by.user,
                 instance.task.title,
@@ -76,4 +76,3 @@ class SolutionSerializer(serializers.ModelSerializer):
         profile = CurrentUserMiddleware.get_current_user_profile()
         models.Solution.objects.filter(created_by=profile, task=validated_data['task']).delete()
         return super().create(validated_data)
-
