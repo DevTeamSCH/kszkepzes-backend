@@ -14,7 +14,7 @@ def read_email(name):
 def registration(user):
     subject = "Kszképzés regisztráció"
     message = read_email('registration.txt')
-    message = str.format(message % {'name': user.first_name})
+    message = str.format(message % {'name': user.get_full_name()})
     send_mail(subject, message, sender_email, [user.email, ])
 
 
