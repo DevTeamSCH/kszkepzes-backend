@@ -25,9 +25,9 @@ class NoteViewSet(viewsets.ModelViewSet):
         profile_id = self.request.query_params.get('profileID', None)
         event_id = self.request.query_params.get('eventID', None)
         if profile_id is not None and event_id is not None:
-            return queryset.filter(user=profile_id, event=event_id)
+            return queryset.filter(profile=profile_id, event=event_id)
         if profile_id is not None:
-            return queryset.filter(user=profile_id)
+            return queryset.filter(profile=profile_id)
         if event_id is not None:
             return queryset.filter(event=event_id)
         return queryset
