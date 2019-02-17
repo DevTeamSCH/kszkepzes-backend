@@ -1,4 +1,4 @@
-﻿Kedves %(name)s!
+﻿Szia!
 
 Örömmel vettük jelenkezésedet az idei KSZKépzés programunkba. Azonban ahhoz, hogy ezt el is tudjuk bírálni, még szükségünk van pár dologra tőled:
 	- ki kell töltened a profilodat,
