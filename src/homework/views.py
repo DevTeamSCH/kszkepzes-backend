@@ -10,10 +10,15 @@ class TasksViewSet(viewsets.ModelViewSet):
     queryset = models.Task.objects.all()
     permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, permissions.IsStaffOrStudent, )
 
-
 class SolutionsViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.SolutionSerializer
+    serializer_class = serializers.SolutionSerializer_Student
     permission_classes = (permissions.IsStaffOrStudent, )
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if user.profile.role == 'Staff':
+            return serializers.SolutionSerializer_Staff
+        return serializers.SolutionSerializer_Student
 
     def get_queryset(self):
         user = self.request.user

@@ -9,8 +9,14 @@ from . import serializers
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.ProfileSerializer
+    serializer_class = serializers.ProfileSerializer_User
     permission_classes = (permissions.IsAuthenticated, IsSafeOrPatch)
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if user.profile.role == 'Staff':
+            return serializers.ProfileSerializer_Staff
+        return serializers.ProfileSerializer_User
 
     def get_queryset(self):
         user = self.request.user
