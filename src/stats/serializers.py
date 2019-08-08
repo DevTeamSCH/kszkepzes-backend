@@ -37,6 +37,13 @@ class NoteSerializer(serializers.ModelSerializer):
     created_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     created_by_name = serializers.SerializerMethodField()
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not data['event']: data['event']= ""
+        if not data['profile']: data['profile']= ""
+        
+        return data
+
     class Meta:
         model = models.Note
         fields = '__all__'

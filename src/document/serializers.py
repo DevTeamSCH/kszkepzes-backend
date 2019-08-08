@@ -14,6 +14,11 @@ class DocumentSerializer(serializers.ModelSerializer):
         model = models.Document
         fields = ('uploaded_by', 'uploaded_at', 'name', 'description', 'file', 'uploaded_by_name', 'solution', )
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not data['file']: data['file']= ""
+        return data
+
     def get_uploaded_by_name(self, obj):
         return obj.uploaded_by.full_name
 
