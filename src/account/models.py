@@ -42,6 +42,10 @@ class Profile(models.Model):
     role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
 
     @property
+    def score(self):
+        return  self.events_visitor.all().count()*10 + self.solution.filter(accepted=True).count()*50
+
+    @property
     def full_name(self):
         return self.user.get_full_name()
 

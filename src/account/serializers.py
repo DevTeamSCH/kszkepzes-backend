@@ -30,6 +30,7 @@ class ProfileSerializer_User(serializers.ModelSerializer):
             'motivation_exercise',
             'full_name',
             'role',
+            'score',
         )
 
     def validate_updated_at(self, value):
@@ -82,6 +83,7 @@ class ProfileSerializer_Staff(serializers.ModelSerializer):
             'motivation_exercise',
             'full_name',
             'role',
+            'score',
         )
 
     def validate_updated_at(self, value):
