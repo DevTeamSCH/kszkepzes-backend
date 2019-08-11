@@ -53,14 +53,6 @@ class SolutionSerializer_Student(serializers.ModelSerializer):
             raise serializers.ValidationError('You late.')
         return value
 
-    def validate_accepted(self, value):
-        raise serializers.ValidationError(
-            "You don't have permission to modify accepted!")
-
-    def validate_corrected(self, value):
-        raise serializers.ValidationError(
-            "You don't have permission to modify corrected!")
-
     def validate_note(self, value):
         if value != '':
             raise serializers.ValidationError(
@@ -109,15 +101,6 @@ class SolutionSerializer_Staff(serializers.ModelSerializer):
     def validate_task(self, value):
         if timezone.now() > value.deadline:
             raise serializers.ValidationError('You late.')
-        return value
-
-    def validate_accepted(self, value):
-        return value
-
-    def validate_corrected(self, value):
-        return value
-
-    def validate_note(self, value):
         return value
 
     def update(self, instance, validated_data):
