@@ -11,7 +11,10 @@ class ChoiceSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer_User(serializers.ModelSerializer):
-    groups = serializers.SlugRelatedField(many=True, slug_field='choice', queryset=models.GroupChoice.objects.all())
+    groups = serializers.SlugRelatedField(
+        many=True,
+        slug_field='choice',
+        queryset=models.GroupChoice.objects.all())
     updated_at = serializers.DateTimeField(read_only=True)
     full_name = serializers.SerializerMethodField()
 
@@ -36,17 +39,18 @@ class ProfileSerializer_User(serializers.ModelSerializer):
     def validate_updated_at(self, value):
         deadline = models.Deadline.get_solo().deadline
         if deadline is not None and value > deadline:
-            raise serializers.ValidationError("You cannot join after the deadline")
+            raise serializers.ValidationError(
+                "You cannot join after the deadline")
         return value
 
     def validate_role(self, value):
         modifier_role = CurrentUserMiddleware.get_current_user_profile().role
         if value != modifier_role:
-            raise serializers.ValidationError("You don't have permission change role")
+            raise serializers.ValidationError(
+                "You don't have permission change role")
         return value
 
     def validate_signed(self, value):
-        modifier = CurrentUserMiddleware.get_current_user_profile()
         if value is False:
             raise serializers.ValidationError("You cannot join without signed")
         return value
@@ -63,8 +67,12 @@ class ProfileSerializer_User(serializers.ModelSerializer):
     def get_full_name(self, obj):
         return obj.full_name
 
+
 class ProfileSerializer_Staff(serializers.ModelSerializer):
-    groups = serializers.SlugRelatedField(many=True, slug_field='choice', queryset=models.GroupChoice.objects.all())
+    groups = serializers.SlugRelatedField(
+        many=True,
+        slug_field='choice',
+        queryset=models.GroupChoice.objects.all())
     updated_at = serializers.DateTimeField(read_only=True)
     full_name = serializers.SerializerMethodField()
 
@@ -89,7 +97,8 @@ class ProfileSerializer_Staff(serializers.ModelSerializer):
     def validate_updated_at(self, value):
         deadline = models.Deadline.get_solo().deadline
         if deadline is not None and value > deadline:
-            raise serializers.ValidationError("You cannot join after the deadline")
+            raise serializers.ValidationError(
+                "You cannot join after the deadline")
         return value
 
     def validate_role(self, value):

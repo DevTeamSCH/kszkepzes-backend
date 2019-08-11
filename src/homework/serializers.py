@@ -14,19 +14,28 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if timezone.now() >= data['deadline']:
-            raise serializers.ValidationError('Please, enter appropriate deadline.')
+            raise serializers.ValidationError(
+                'Please, enter appropriate deadline.')
         return data
 
     def create(self, validated_data):
-        profiles = Profile.objects.filter(role="Student").exclude(user__email='')
+        profiles = Profile.objects.filter(
+            role="Student").exclude(
+            user__email='')
         for profile in profiles:
             email.new_homework(profile.user, validated_data.get('deadline'))
         return self.Meta.model.objects.create(**validated_data)
 
+
 class SolutionSerializer_Student(serializers.ModelSerializer):
     class Meta:
         model = models.Solution
-        read_only_fields = ('created_by', 'created_at', 'updated_at', 'ready', 'files')
+        read_only_fields = (
+            'created_by',
+            'created_at',
+            'updated_at',
+            'ready',
+            'files')
         fields = (
             'id',
             'task',
@@ -45,18 +54,22 @@ class SolutionSerializer_Student(serializers.ModelSerializer):
         return value
 
     def validate_accepted(self, value):
-        raise serializers.ValidationError("You don't have permission to modify accepted!")
+        raise serializers.ValidationError(
+            "You don't have permission to modify accepted!")
 
     def validate_corrected(self, value):
-        raise serializers.ValidationError("You don't have permission to modify corrected!")
+        raise serializers.ValidationError(
+            "You don't have permission to modify corrected!")
 
     def validate_note(self, value):
         if value != '':
-            raise serializers.ValidationError("You don't have permission to create note!")
+            raise serializers.ValidationError(
+                "You don't have permission to create note!")
         return value
 
     def update(self, instance, validated_data):
-        if instance.corrected is not True and validated_data.get('corrected', instance.corrected) is True:
+        if instance.corrected is not True and validated_data.get(
+                'corrected', instance.corrected) is True:
             email.homework_corrected(
                 instance.created_by.user,
                 instance.task.title,
@@ -66,13 +79,21 @@ class SolutionSerializer_Student(serializers.ModelSerializer):
 
     def create(self, validated_data):
         profile = CurrentUserMiddleware.get_current_user_profile()
-        models.Solution.objects.filter(created_by=profile, task=validated_data['task']).delete()
+        models.Solution.objects.filter(
+            created_by=profile,
+            task=validated_data['task']).delete()
         return super().create(validated_data)
+
 
 class SolutionSerializer_Staff(serializers.ModelSerializer):
     class Meta:
         model = models.Solution
-        read_only_fields = ('created_by', 'created_at', 'updated_at', 'ready', 'files')
+        read_only_fields = (
+            'created_by',
+            'created_at',
+            'updated_at',
+            'ready',
+            'files')
         fields = (
             'id',
             'task',
@@ -100,7 +121,8 @@ class SolutionSerializer_Staff(serializers.ModelSerializer):
         return value
 
     def update(self, instance, validated_data):
-        if instance.corrected is not True and validated_data.get('corrected', instance.corrected) is True:
+        if instance.corrected is not True and validated_data.get(
+                'corrected', instance.corrected) is True:
             email.homework_corrected(
                 instance.created_by.user,
                 instance.task.title,
@@ -110,5 +132,7 @@ class SolutionSerializer_Staff(serializers.ModelSerializer):
 
     def create(self, validated_data):
         profile = CurrentUserMiddleware.get_current_user_profile()
-        models.Solution.objects.filter(created_by=profile, task=validated_data['task']).delete()
+        models.Solution.objects.filter(
+            created_by=profile,
+            task=validated_data['task']).delete()
         return super().create(validated_data)

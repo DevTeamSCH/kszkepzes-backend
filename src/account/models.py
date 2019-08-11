@@ -12,7 +12,11 @@ class GroupChoice(models.Model):
         ('HAT', 'Hallgatói Tudásbázis'),
         ('N', 'None'),
     )
-    choice = models.CharField(max_length=10, choices=TEAMS, default='N', unique=True)
+    choice = models.CharField(
+        max_length=10,
+        choices=TEAMS,
+        default='N',
+        unique=True)
 
     def __str__(self):
         return self.choice
@@ -32,18 +36,20 @@ class Profile(models.Model):
         related_name='profile',
         on_delete=models.CASCADE
     )
-    # TODO: Change the default to json render side
+
     motivation_about = models.TextField(blank=True, default='')
     motivation_profession = models.TextField(blank=True, default='')
     motivation_exercise = models.TextField(blank=True, default='')
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
-    groups = models.ManyToManyField(GroupChoice, related_name='profiles', blank=True)
+    groups = models.ManyToManyField(
+        GroupChoice, related_name='profiles', blank=True)
     role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
 
     @property
     def score(self):
-        return  self.events_visitor.all().count()*10 + self.solution.filter(accepted=True).count()*50
+        return self.events_visitor.all().count() * 10 + \
+            self.solution.filter(accepted=True).count() * 50
 
     @property
     def full_name(self):
