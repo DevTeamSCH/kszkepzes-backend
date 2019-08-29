@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
-from rest_framework.decorators import list_route
+from rest_framework.decorators import action
 from common.permissions import IsSafeOrPatch
 
 from . import models
@@ -27,7 +27,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
             return models.Profile.objects.all()
         return models.Profile.objects.filter(pk=user.profile.id)
 
-    @list_route(methods=['get'])
+    @action(detail=False)
     def me(self, request):
         serializer = self.serializer_class(request.user.profile)
         return Response(serializer.data)
