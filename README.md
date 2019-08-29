@@ -24,7 +24,7 @@ Atirányítási cím: `http://127.0.0.1:3000/api/v1/complete/authsch`
    export MEDIA_ROOT=static/
   ```
 5. source environment.sh
-6. pip install -r requirements/dev.txt
+6. pip install -r requirements/development.txt
 7. python3 src/manage.py runserver
 
 ## Formális Követelmények
