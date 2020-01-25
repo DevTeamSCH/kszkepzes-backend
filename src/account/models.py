@@ -61,3 +61,4 @@ class Profile(models.Model):
 
 class Deadline(SingletonModel):
     deadline = models.DateTimeField(null=True)
+    text = models.CharField(max_length=50, blank=True, default='')
