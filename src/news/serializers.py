@@ -4,13 +4,12 @@ from common.serializers import CurrentUserProfileDefault
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-    updated_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     last_update_by = serializers.SerializerMethodField()
     author = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
-        read_only_fields = ('author', 'created_at', 'updated_at', 'updated_by')
+        read_only_fields = ('author', 'created_at', 'updated_at')
         fields = '__all__'
 
     def get_last_update_by(self, obj):

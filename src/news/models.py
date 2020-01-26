@@ -17,7 +17,8 @@ class Article(models.Model):
     updated_by = models.ForeignKey(
         Profile,
         related_name="updater",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        default=CurrentUserMiddleware.get_current_user_profile
     )
 
     def __str__(self):
