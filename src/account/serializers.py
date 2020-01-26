@@ -8,7 +8,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.GroupChoice
         fields = ('choice', 'profile')
-
+                
 
 class ProfileSerializer_User(serializers.ModelSerializer):
     groups = serializers.SlugRelatedField(
