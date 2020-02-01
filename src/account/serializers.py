@@ -8,7 +8,6 @@ class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.GroupChoice
         fields = ('choice', 'profile')
-                
 
 class ProfileSerializer_User(serializers.ModelSerializer):
     groups = serializers.SlugRelatedField(
@@ -17,6 +16,7 @@ class ProfileSerializer_User(serializers.ModelSerializer):
         queryset=models.GroupChoice.objects.all())
     updated_at = serializers.DateTimeField(read_only=True)
     full_name = serializers.SerializerMethodField()
+    bits = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Profile
@@ -33,7 +33,7 @@ class ProfileSerializer_User(serializers.ModelSerializer):
             'motivation_exercise',
             'full_name',
             'role',
-            'score',
+            'bits'
         )
 
     def validate_updated_at(self, value):
@@ -66,6 +66,9 @@ class ProfileSerializer_User(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return obj.full_name
+    
+    def get_bits(self, obj):
+        return obj.homework_bits + obj.events_visited
 
 
 class ProfileSerializer_Staff(serializers.ModelSerializer):
@@ -91,7 +94,8 @@ class ProfileSerializer_Staff(serializers.ModelSerializer):
             'motivation_exercise',
             'full_name',
             'role',
-            'score',
+            'events_visited',
+            'homework_bits'
         )
 
     def validate_updated_at(self, value):

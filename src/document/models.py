@@ -7,6 +7,8 @@ from account.models import Profile
 from homework.models import Solution
 from common.validators import FileSizeValidator
 
+from common.middleware import CurrentUserMiddleware
+
 
 def document_file_name(instance, filename):
     return '/'.join([
@@ -18,7 +20,12 @@ def document_file_name(instance, filename):
 
 
 class Document(models.Model):
-    uploaded_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    uploaded_by = models.ForeignKey(
+        Profile,
+        on_delete=models.DO_NOTHING,
+        related_name='documents',
+        default=CurrentUserMiddleware.get_current_user_profile,
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
     name = models.CharField(max_length=150, blank=True, default='')
     description = models.TextField(blank=True, default='')

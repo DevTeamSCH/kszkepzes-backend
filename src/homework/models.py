@@ -15,6 +15,7 @@ class Task(models.Model):
     title = models.CharField(max_length=150)
     text = models.TextField()
     deadline = models.DateTimeField()
+    bits = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
@@ -33,6 +34,10 @@ class Solution(models.Model):
     note = models.TextField(blank=True, default='')
     accepted = models.BooleanField(blank=True, default=False)
     corrected = models.BooleanField(blank=True, default=False)
+
+    @property
+    def my_bits(self):
+        return 10
 
     def __str__(self):
         return "[{}] {}".format(self.created_at, self.created_by.full_name)
