@@ -68,6 +68,8 @@ class ProfileSerializer_User(serializers.ModelSerializer):
         return obj.full_name
     
     def get_bits(self, obj):
+        if obj.homework_bits is None:
+            return obj.events_visited
         return obj.homework_bits + obj.events_visited
 
 
