@@ -37,5 +37,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
         deadline = models.Deadline.get_solo()
         return Response({
             'deadline': deadline.deadline,
-            'text': deadline.text
+            'messageBefore': deadline.messageBefore,
+            'messageAfter': deadline.messageAfter
         })

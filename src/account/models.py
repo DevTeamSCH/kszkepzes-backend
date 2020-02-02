@@ -46,7 +46,7 @@ class Profile(models.Model):
     groups = models.ManyToManyField(
         GroupChoice, related_name='profiles', blank=True)
     role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
-
+    
     @property
     def events_visited(self):
         return self.events_visitor.all().count()
@@ -65,4 +65,5 @@ class Profile(models.Model):
 
 class Deadline(SingletonModel):
     deadline = models.DateTimeField(null=True)
-    text = models.CharField(max_length=50, blank=True, default='')
+    messageBefore = models.TextField(blank=True, default='')
+    messageAfter = models.TextField(blank=True, default='')

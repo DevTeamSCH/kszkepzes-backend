@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'stats',
     'news',
     'document',
+    'mentors',
     'groups',
     'drf_yasg',
 ]

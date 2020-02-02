@@ -111,3 +111,9 @@ environment.bat
 
 #PyCharm
 .idea/
+
+#Migrations
+**/migrations/
+
+#media
+/media/*
