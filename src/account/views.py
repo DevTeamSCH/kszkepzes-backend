@@ -31,7 +31,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     def me(self, request):
         serializer = self.serializer_class(request.user.profile)
         return Response(serializer.data)
-    
+
     @action(detail=False)
     def deadline(self, request):
         deadline = models.Deadline.get_solo()

@@ -31,8 +31,10 @@ class Event(models.Model):
 
 
 class Note(models.Model):
-    event = models.ForeignKey(Event, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
-    profile = models.ForeignKey(Profile, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
+    event = models.ForeignKey(
+        Event, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
+    profile = models.ForeignKey(
+        Profile, related_name='notes', on_delete=models.CASCADE, blank=True, null=True)
     note = models.TextField()
     created_by = models.ForeignKey(
         Profile,

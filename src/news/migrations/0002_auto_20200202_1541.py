@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='article',
             name='updated_by',
-            field=models.ForeignKey(default=common.middleware.CurrentUserMiddleware.get_current_user_profile, on_delete=django.db.models.deletion.DO_NOTHING, related_name='updater', to='account.Profile'),
+            field=models.ForeignKey(default=common.middleware.CurrentUserMiddleware.get_current_user_profile,
+                                    on_delete=django.db.models.deletion.DO_NOTHING, related_name='updater', to='account.Profile'),
         ),
     ]

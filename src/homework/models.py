@@ -22,7 +22,8 @@ class Task(models.Model):
 
 
 class Solution(models.Model):
-    task = models.ForeignKey(Task, related_name='solutions', on_delete=models.CASCADE)
+    task = models.ForeignKey(
+        Task, related_name='solutions', on_delete=models.CASCADE)
     created_by = models.ForeignKey(
         Profile,
         related_name='solution',

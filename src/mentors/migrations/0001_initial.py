@@ -17,12 +17,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Mentor',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200)),
                 ('text', models.TextField()),
-                ('image', models.ImageField(blank=True, null=True, upload_to='mentors/images/')),
+                ('image', models.ImageField(blank=True,
+                                            null=True, upload_to='mentors/images/')),
                 ('email', models.EmailField(max_length=254)),
-                ('mentor', models.ForeignKey(default=common.middleware.CurrentUserMiddleware.get_current_user_profile, on_delete=django.db.models.deletion.DO_NOTHING, related_name='mentor', to='account.Profile')),
+                ('mentor', models.ForeignKey(default=common.middleware.CurrentUserMiddleware.get_current_user_profile,
+                                             on_delete=django.db.models.deletion.DO_NOTHING, related_name='mentor', to='account.Profile')),
             ],
         ),
     ]

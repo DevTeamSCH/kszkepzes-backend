@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from solo.models import SingletonModel
 from django.db.models import Sum
-from django.db.models.functions import Coalesce   
+
 
 class GroupChoice(models.Model):
     TEAMS = (
@@ -46,14 +46,17 @@ class Profile(models.Model):
     groups = models.ManyToManyField(
         GroupChoice, related_name='profiles', blank=True)
     role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
-    
+
     @property
     def events_visited(self):
         return self.events_visitor.all().count()
-    
+
     @property
     def homework_bits(self):
-        return self.solution.filter(accepted=True).values('task__bits').aggregate(total_bits=Sum('task__bits')).get('total_bits')
+        return self.solution.filter(accepted=True) \
+            .values('task__bits') \
+            .aggregate(total_bits=Sum('task__bits')) \
+            .get('total_bits')
 
     @property
     def full_name(self):

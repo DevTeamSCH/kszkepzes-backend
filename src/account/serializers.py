@@ -9,6 +9,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         model = models.GroupChoice
         fields = ('choice', 'profile')
 
+
 class ProfileSerializer_User(serializers.ModelSerializer):
     groups = serializers.SlugRelatedField(
         many=True,
@@ -66,7 +67,7 @@ class ProfileSerializer_User(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return obj.full_name
-    
+
     def get_bits(self, obj):
         if obj.homework_bits is None:
             return obj.events_visited

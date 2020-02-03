@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='absent',
-            field=models.ManyToManyField(blank=True, related_name='events_absent', to='account.Profile'),
+            field=models.ManyToManyField(
+                blank=True, related_name='events_absent', to='account.Profile'),
         ),
         migrations.AlterField(
             model_name='event',
             name='visitors',
-            field=models.ManyToManyField(blank=True, related_name='events_visitor', to='account.Profile'),
+            field=models.ManyToManyField(
+                blank=True, related_name='events_visitor', to='account.Profile'),
         ),
     ]

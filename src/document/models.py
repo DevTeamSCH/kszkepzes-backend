@@ -43,7 +43,8 @@ class Document(models.Model):
         null=True,
         upload_to=document_file_name
     )
-    solution = models.ForeignKey(Solution, related_name='files', on_delete=models.CASCADE)
+    solution = models.ForeignKey(
+        Solution, related_name='files', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='document',
             name='file',
-            field=models.FileField(blank=True, upload_to='', validators=[django.core.validators.FileExtensionValidator(['png', 'jpeg', 'jpg', 'zip']), common.validators.FileSizeValidator(size_limit=52428800)]),
+            field=models.FileField(blank=True, upload_to='', validators=[django.core.validators.FileExtensionValidator(
+                ['png', 'jpeg', 'jpg', 'zip']), common.validators.FileSizeValidator(size_limit=52428800)]),
         ),
     ]

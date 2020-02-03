@@ -1,6 +1,5 @@
 from mentors.models import Mentor
 from rest_framework import serializers
-from common.serializers import CurrentUserProfileDefault
 
 
 class MentorSerializer(serializers.ModelSerializer):

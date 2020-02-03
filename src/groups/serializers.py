@@ -14,5 +14,3 @@ class GroupSerializer(serializers.ModelSerializer):
             'name',
             'description',
         )
-
-

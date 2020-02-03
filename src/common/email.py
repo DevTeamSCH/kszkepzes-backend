@@ -36,7 +36,8 @@ def new_homework(user, deadline):
     deadline = deadline.strftime('%Y-%m-%d %H:%M')
     subject = "Új házifeladat"
     message = read_email('new_homework.txt')
-    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
+    message = str.format(
+        message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
     send_mail(subject, message, sender_email, [user.email, ])
 
 
@@ -47,5 +48,6 @@ def homework_corrected(user, title, accepted):
     else:
         status = 'Hibás'
     message = read_email('homework_corrected.txt')
-    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'status': status, 'title': title})
+    message = str.format(message % {'name': user.get_full_name(
+    ), 'link': link, 'status': status, 'title': title})
     send_mail(subject, message, sender_email, [user.email, ])

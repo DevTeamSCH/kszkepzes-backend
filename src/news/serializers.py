@@ -1,6 +1,5 @@
 from news.models import Article
 from rest_framework import serializers
-from common.serializers import CurrentUserProfileDefault
 
 
 class ArticleSerializer(serializers.ModelSerializer):

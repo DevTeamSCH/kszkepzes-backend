@@ -15,7 +15,8 @@ class EventAdmin(ExportMixin, admin.ModelAdmin):
 
 @admin.register(models.Note)
 class NoteAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('profile', 'note', 'event', 'created_by', 'created_at', 'updated_at')
+    list_display = ('profile', 'note', 'event',
+                    'created_by', 'created_at', 'updated_at')
     list_filter = ('profile', 'created_by', 'event')
     search_fields = ('event__name', 'note')
     resource_class = resources.NoteResource
