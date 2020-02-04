@@ -3,7 +3,9 @@ from common import permissions
 from . import models
 from . import serializers
 from rest_framework.parsers import JSONParser, MultiPartParser
-
+from django.http import HttpResponse, Http404
+from rest_framework.decorators import action
+import os
 
 class DocumentViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DocumentSerializer
@@ -43,3 +45,12 @@ class DocumentViewSet(viewsets.ModelViewSet):
         }
  
         serializer.save(**kwargs)
+
+    @action(detail=True, methods=["get"])
+    def download(self, request, pk):
+        document = self.get_object()
+        with document.file.open() as fh:
+            response = HttpResponse(fh.read(), content_type="application/media")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(document.file.name)
+            return response
+        raise Http404
