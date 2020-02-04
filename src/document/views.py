@@ -36,3 +36,10 @@ class DocumentViewSet(viewsets.ModelViewSet):
         if solution_id is not None:
             return queryset.filter(solution=solution_id)
         return queryset
+    
+    def perform_create(self, serializer):
+        kwargs = {
+            'uploaded_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from account import models
-from common.middleware import CurrentUserMiddleware
 from common import email
 
 
@@ -45,10 +44,10 @@ class ProfileSerializer_User(serializers.ModelSerializer):
         return value
 
     def validate_role(self, value):
-        modifier_role = CurrentUserMiddleware.get_current_user_profile().role
+        modifier_role = self.context['request'].user.profile.role
         if value != modifier_role:
             raise serializers.ValidationError(
-                "You don't have permission change role")
+                "You don't have permission to change role")
         return value
 
     def validate_signed(self, value):

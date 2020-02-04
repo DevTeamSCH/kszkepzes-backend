@@ -3,7 +3,6 @@ from django.utils import timezone
 from account.models import Profile
 from . import models
 from common import email
-from common.middleware import CurrentUserMiddleware
 
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -70,7 +69,7 @@ class SolutionSerializer_Student(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
     def create(self, validated_data):
-        profile = CurrentUserMiddleware.get_current_user_profile()
+        profile = self.context['request'].user.profile
         models.Solution.objects.filter(
             created_by=profile,
             task=validated_data['task']).delete()
@@ -114,7 +113,7 @@ class SolutionSerializer_Staff(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
     def create(self, validated_data):
-        profile = CurrentUserMiddleware.get_current_user_profile()
+        profile = self.context['request'].user.profile
         models.Solution.objects.filter(
             created_by=profile,
             task=validated_data['task']).delete()

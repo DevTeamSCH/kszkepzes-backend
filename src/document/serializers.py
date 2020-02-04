@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from common.serializers import CurrentUserProfileDefault
 from . import models
-from common.middleware import CurrentUserMiddleware
 
 _max_count = 1
 
@@ -32,7 +31,7 @@ class DocumentSerializer(serializers.ModelSerializer):
         return obj.uploaded_by.full_name
 
     def validate_solution(self, value):
-        profile = CurrentUserMiddleware.get_current_user_profile()
+        profile = self.context['request'].user.profile
         if value not in profile.solution.all():
             raise serializers.ValidationError('You dont have permission!')
         count = models.Document.objects.filter(

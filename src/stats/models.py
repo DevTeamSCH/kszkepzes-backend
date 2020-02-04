@@ -1,6 +1,5 @@
 from django.db import models
 from account.models import Profile
-from common.middleware import CurrentUserMiddleware
 
 
 class Event(models.Model):
@@ -21,7 +20,6 @@ class Event(models.Model):
         Profile,
         related_name='created_event',
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -40,7 +38,6 @@ class Note(models.Model):
         Profile,
         related_name='created_notes',
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)

@@ -1,5 +1,4 @@
 from django.db import models
-from common.middleware import CurrentUserMiddleware
 from account.models import Profile
 
 
@@ -8,7 +7,6 @@ class Task(models.Model):
         Profile,
         on_delete=models.DO_NOTHING,
         related_name='tasks',
-        default=CurrentUserMiddleware.get_current_user_profile,
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -28,7 +26,6 @@ class Solution(models.Model):
         Profile,
         related_name='solution',
         on_delete=models.DO_NOTHING,
-        default=CurrentUserMiddleware.get_current_user_profile
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)

@@ -9,11 +9,25 @@ class StaffEventViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all().order_by('date')
     permission_classes = (IsStaffUser, )
 
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)
+
 
 class StudentEventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.StudentEventSerializer
     queryset = models.Event.objects.all().order_by('date')
     permission_classes = (IsStaffOrStudent, )
+
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)
 
 
 class NoteViewSet(viewsets.ModelViewSet):
@@ -31,3 +45,10 @@ class NoteViewSet(viewsets.ModelViewSet):
         if event_id is not None:
             return queryset.filter(event=event_id)
         return queryset
+    
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)

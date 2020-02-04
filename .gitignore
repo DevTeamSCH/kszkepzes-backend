@@ -112,5 +112,8 @@ environment.bat
 #PyCharm
 .idea/
 
+#VSCode
+.vscode/
+
 #media
 /media/*

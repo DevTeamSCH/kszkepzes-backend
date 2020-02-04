@@ -4,7 +4,14 @@ from mentors.models import Mentor
 from mentors.serializers import MentorSerializer
 
 
-class MentorssViewSet(viewsets.ModelViewSet):
+class MentorsViewSet(viewsets.ModelViewSet):
     serializer_class = MentorSerializer
     permission_classes = (IsStaffOrStudent,)
     queryset = Mentor.objects.all().order_by('name')
+
+    def perform_create(self, serializer):
+        kwargs = {
+            'mentor': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)

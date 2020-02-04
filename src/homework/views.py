@@ -33,3 +33,10 @@ class SolutionsViewSet(viewsets.ModelViewSet):
             if profile_id is not None:
                 queryset = queryset.filter(created_by=profile_id)
         return queryset
+    
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)
