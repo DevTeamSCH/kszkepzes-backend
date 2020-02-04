@@ -1,5 +1,7 @@
 from .base import *
 
+DEBUG = int(os.environ.get("DEBUG", default=1))
+
 SESSION_COOKIE_SECURE = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

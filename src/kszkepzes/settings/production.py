@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = False
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = ['*']
 
