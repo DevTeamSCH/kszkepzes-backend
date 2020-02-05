@@ -8,6 +8,7 @@ _max_count = 1
 class DocumentSerializer(serializers.ModelSerializer):
     uploaded_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     uploaded_by_name = serializers.SerializerMethodField()
+    file = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Document
@@ -30,6 +31,9 @@ class DocumentSerializer(serializers.ModelSerializer):
     def get_uploaded_by_name(self, obj):
         return obj.uploaded_by.full_name
 
+    def get_file(self, obj):
+        return f"/api/v1/documents/{obj.id}/download/"
+
     def validate_solution(self, value):
         profile = self.context['request'].user.profile
         if value not in profile.solution.all():
@@ -38,7 +42,5 @@ class DocumentSerializer(serializers.ModelSerializer):
             uploaded_by=profile, solution=value).count()
         if count >= _max_count:
             raise serializers.ValidationError(
-                'You cant upload more than ' +
-                str(_max_count) +
-                ' document to one solution!')
+                f'You cant upload more than {max_count} document to one solution!')
         return value
