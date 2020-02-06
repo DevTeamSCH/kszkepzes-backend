@@ -13,6 +13,13 @@ class TasksViewSet(viewsets.ModelViewSet):
         permissions.IsStaffOrStudent,
     )
 
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)
+
 
 class SolutionsViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.SolutionSerializer_Student
