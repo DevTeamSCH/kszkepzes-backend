@@ -12,47 +12,47 @@ def read_email(name):
 
 
 def registration(user):
-    # subject = "Kszképzés regisztráció"
-    # message = read_email('registration.txt')
-    # message = str.format(message % {'name': user.get_full_name()})
-    # send_mail(subject, message, sender_email, [user.email, ])
+    subject = "Kszképzés regisztráció"
+    message = read_email('registration.txt')
+    message = str.format(message % {'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
     pass
 
 
 def admitted(user):
     subject = "Jelentkezés eredménye"
-    # message = read_email('admitted.txt')
-    # message = str.format(message % {'name': user.get_full_name()})
-    # send_mail(subject, message, sender_email, [user.email, ])
+    message = read_email('admitted.txt')
+    message = str.format(message % {'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
     pass
 
 
 def denied(user):
-    # subject = "Jelentkezés eredménye"
-    # message = read_email('denied.txt')
-    # message = str.format(message % {'name': user.get_full_name()})
-    # send_mail(subject, message, sender_email, [user.email, ])
+    subject = "Jelentkezés eredménye"
+    message = read_email('denied.txt')
+    message = str.format(message % {'name': user.get_full_name()})
+    send_mail(subject, message, sender_email, [user.email, ])
     pass
 
 
 def new_homework(user, deadline):
-    # deadline = deadline.strftime('%Y-%m-%d %H:%M')
-    # subject = "Új házifeladat"
-    # message = read_email('new_homework.txt')
-    # message = str.format(
-    #     message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
-    # send_mail(subject, message, sender_email, [user.email, ])
+    deadline = deadline.strftime('%Y-%m-%d %H:%M')
+    subject = "Új házifeladat"
+    message = read_email('new_homework.txt')
+    message = str.format(
+        message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
+    send_mail(subject, message, sender_email, [user.email, ])
     pass
 
 
 def homework_corrected(user, title, accepted):
-    # subject = "Házifeladat eredménye"
-    # if accepted:
-    #     status = 'Elfogadva'
-    # else:
-    #     status = 'Hibás'
-    # message = read_email('homework_corrected.txt')
-    # message = str.format(message % {'name': user.get_full_name(
-    # ), 'link': link, 'status': status, 'title': title})
-    # send_mail(subject, message, sender_email, [user.email, ])
+    subject = "Házifeladat eredménye"
+    if accepted:
+        status = 'Elfogadva'
+    else:
+        status = 'Hibás'
+    message = read_email('homework_corrected.txt')
+    message = str.format(message % {'name': user.get_full_name(
+    ), 'link': link, 'status': status, 'title': title})
+    send_mail(subject, message, sender_email, [user.email, ])
     pass
