@@ -1,5 +1,8 @@
+import os
+
 from django.db import models
 from account.models import Profile
+from django.dispatch import receiver
 
 
 class Mentor(models.Model):
@@ -16,3 +19,10 @@ class Mentor(models.Model):
 
     def __str__(self):
         return self.name
+
+# Deletes file from filesystem when File object is deleted.
+@receiver(models.signals.post_delete, sender=Mentor)
+def auto_delete_image_on_delete(sender, instance, **kwargs):
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
