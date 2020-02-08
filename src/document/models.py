@@ -10,7 +10,7 @@ from common.validators import FileSizeValidator
 
 def document_file_name(instance, filename):
     return '/'.join([
-        'document',
+        'public/document',
         instance.solution.task.title,
         instance.uploaded_by.full_name,
         filename

@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^api/v1/', include('document.urls')),
     url(r'^api/v1/', include('groups.urls')),
     url(r'^api/v1/', include('mentors.urls')),
+    url(r'^api/v1/', include('images.urls')),
     url(r'^api/v1/logout/$', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
