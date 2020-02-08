@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Images(models.Model):
+class Image(models.Model):
     image = models.ImageField(
         upload_to='public/images/', null=True, blank=True
         )

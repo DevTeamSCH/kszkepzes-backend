@@ -1,14 +1,10 @@
-from common.permissions import IsStaffOrStudent, \
-    IsStaffOrReadOnlyForAuthenticated
+from common.permissions import IsStaffOrReadOnly
 from rest_framework import viewsets
-from images.models import Images
-from images.serializers import ImagesSerializer
+from images.models import Image
+from images.serializers import ImageSerializer
 
 
 class ImagesViewSet(viewsets.ModelViewSet):
-    serializer_class = ImagesSerializer
-    permission_classes = (
-        IsStaffOrReadOnlyForAuthenticated,
-        IsStaffOrStudent,
-    )
-    queryset = Images.objects.all()
+    serializer_class = ImageSerializer
+    permission_classes = (IsStaffOrReadOnly, )
+    queryset = Image.objects.all()
