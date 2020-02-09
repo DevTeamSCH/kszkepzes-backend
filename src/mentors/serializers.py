@@ -12,3 +12,12 @@ class MentorSerializer(serializers.ModelSerializer):
 
     def get_mentor(self, obj):
         return obj.mentor.full_name
+    
+    def to_representation(self, instance):
+        response = super(
+            MentorSerializer,
+            self
+        ).to_representation(instance)
+        if instance.image:
+            response['image'] = instance.image.url
+        return response
