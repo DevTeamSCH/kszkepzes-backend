@@ -1,16 +1,10 @@
 import os
 
 from django.db import models
-from account.models import Profile
 from django.dispatch import receiver
 
 
 class Mentor(models.Model):
-    mentor = models.ForeignKey(
-        Profile,
-        related_name="mentor",
-        on_delete=models.DO_NOTHING,
-    )
     name = models.CharField(null=False, max_length=200)
     text = models.TextField()
     image = models.ImageField(
