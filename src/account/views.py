@@ -3,7 +3,6 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from common.permissions import IsSafeOrPatch
-from django.db.models import Sum
 
 from . import models
 from . import serializers
