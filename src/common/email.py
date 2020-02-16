@@ -1,8 +1,8 @@
 from django.core.mail import send_mail
 import codecs
 
-sender_email = 'noreply@ujonc.sch.bme.hu'
-link = 'https://ujonc.sch.bme.hu/homework'
+sender_email = 'noreply@ujonc.kszk.bme.hu'
+link = 'https://ujonc.kszk.bme.hu/homework'
 
 
 def read_email(name):
