@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 from common.permissions import IsSafeOrPatch
 from rest_framework_api_key.permissions import HasAPIKey
 
+from django.db.models import Sum
+
 from . import models
 from . import serializers
 
@@ -15,6 +17,14 @@ class MonitorinViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return models.Profile.objects.filter(role='Student')
+
+    @action(detail=False)
+    def totalbits(self, request):
+        profiles = models.Profile.objects.filter(role='Student')
+        bits = map(lambda item: serializers.MonitoringSerializer(item).data['bits'], profiles)
+        return Response({
+            'sum': sum(bits)
+        })
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
