@@ -129,20 +129,19 @@ class ProfileSerializer_Staff(serializers.ModelSerializer):
 class MonitoringSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
+    bits = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Profile
         read_only_fields = (
             'full_name',
             'email',
-            'events_visited',
-            'homework_bits',
+            'bits',
         )
         fields = (
             'full_name',
             'email',
-            'events_visited',
-            'homework_bits',
+            'bits',
         )
 
     def get_full_name(self, obj):
@@ -150,3 +149,8 @@ class MonitoringSerializer(serializers.ModelSerializer):
 
     def get_email(self, obj):
         return obj.user.email
+
+    def get_bits(self, obj):
+        if obj.homework_bits is None:
+            return obj.events_visited
+        return obj.homework_bits + obj.events_visited
