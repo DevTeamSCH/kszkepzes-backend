@@ -134,11 +134,13 @@ class MonitoringSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Profile
         read_only_fields = (
+            'id',
             'full_name',
             'email',
             'bits',
         )
         fields = (
+            'id',
             'full_name',
             'email',
             'bits',
