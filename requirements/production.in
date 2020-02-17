@@ -8,3 +8,4 @@ python-language-server==0.28.2
 drf-yasg==1.16.1
 packaging==19.1
 Pillow==7.0.0
+djangorestframework-api-key==1.4.1

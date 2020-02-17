@@ -3,9 +3,18 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from common.permissions import IsSafeOrPatch
+from rest_framework_api_key.permissions import HasAPIKey
 
 from . import models
 from . import serializers
+
+
+class MonitorinViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.MonitoringSerializer
+    permission_classes = (HasAPIKey,)
+
+    def get_queryset(self):
+        return models.Profile.objects.filter(role='Student')
 
 
 class ProfileViewSet(viewsets.ModelViewSet):

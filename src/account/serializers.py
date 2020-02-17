@@ -124,3 +124,29 @@ class ProfileSerializer_Staff(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return obj.full_name
+
+
+class MonitoringSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
+
+    class Meta:
+        model = models.Profile
+        read_only_fields = (
+            'full_name',
+            'email',
+            'events_visited',
+            'homework_bits',
+        )
+        fields = (
+            'full_name',
+            'email',
+            'events_visited',
+            'homework_bits',
+        )
+
+    def get_full_name(self, obj):
+        return obj.full_name
+
+    def get_email(self, obj):
+        return obj.user.email
