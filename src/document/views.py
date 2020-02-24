@@ -56,7 +56,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         with document.file.open() as fh:
             response = HttpResponse(
                 fh.read(),
-                content_type="application/media"
+                content_type="application"
             )
             response['Content-Disposition'] = \
                 'inline; filename=' + os.path.basename(document.file.name)
