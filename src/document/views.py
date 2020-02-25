@@ -6,6 +6,7 @@ from rest_framework.parsers import JSONParser, MultiPartParser
 from django.http import HttpResponse, Http404
 from rest_framework.decorators import action
 import os
+import mimetypes
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -56,7 +57,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         with document.file.open() as fh:
             response = HttpResponse(
                 fh.read(),
-                content_type="application"
+                content_type=mimetypes.guess_type(document.file.name)
             )
             response['Content-Disposition'] = \
                 'inline; filename=' + os.path.basename(document.file.name)
