@@ -10,7 +10,7 @@ from common.validators import FileSizeValidator
 
 def document_file_name(instance, filename):
     return '/'.join([
-        'document',
+        'public/document',
         instance.solution.task.title,
         instance.uploaded_by.full_name,
         filename
@@ -18,7 +18,11 @@ def document_file_name(instance, filename):
 
 
 class Document(models.Model):
-    uploaded_by = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    uploaded_by = models.ForeignKey(
+        Profile,
+        on_delete=models.DO_NOTHING,
+        related_name='documents',
+    )
     uploaded_at = models.DateTimeField(auto_now_add=True, editable=False)
     name = models.CharField(max_length=150, blank=True, default='')
     description = models.TextField(blank=True, default='')
@@ -36,7 +40,8 @@ class Document(models.Model):
         null=True,
         upload_to=document_file_name
     )
-    solution = models.ForeignKey(Solution, related_name='files', on_delete=models.CASCADE)
+    solution = models.ForeignKey(
+        Solution, related_name='files', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

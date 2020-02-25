@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from solo.models import SingletonModel
+from django.db.models import Sum
 
 
 class GroupChoice(models.Model):
@@ -12,7 +13,11 @@ class GroupChoice(models.Model):
         ('HAT', 'Hallgatói Tudásbázis'),
         ('N', 'None'),
     )
-    choice = models.CharField(max_length=10, choices=TEAMS, default='N', unique=True)
+    choice = models.CharField(
+        max_length=10,
+        choices=TEAMS,
+        default='N',
+        unique=True)
 
     def __str__(self):
         return self.choice
@@ -32,14 +37,26 @@ class Profile(models.Model):
         related_name='profile',
         on_delete=models.CASCADE
     )
-    # TODO: Change the default to json render side
+
     motivation_about = models.TextField(blank=True, default='')
     motivation_profession = models.TextField(blank=True, default='')
     motivation_exercise = models.TextField(blank=True, default='')
     nick = models.CharField(max_length=15, blank=True, default='')
     signed = models.BooleanField(default=False, null=False)
-    groups = models.ManyToManyField(GroupChoice, related_name='profiles', blank=True)
+    groups = models.ManyToManyField(
+        GroupChoice, related_name='profiles', blank=True)
     role = models.CharField(max_length=10, choices=ROLES, default='Applicant')
+
+    @property
+    def events_visited(self):
+        return self.events_visitor.all().count()
+
+    @property
+    def homework_bits(self):
+        return self.solution.filter(accepted=True) \
+            .values('task__bits') \
+            .aggregate(total_bits=Sum('task__bits')) \
+            .get('total_bits')
 
     @property
     def full_name(self):
@@ -51,3 +68,5 @@ class Profile(models.Model):
 
 class Deadline(SingletonModel):
     deadline = models.DateTimeField(null=True)
+    messageBefore = models.TextField(blank=True, default='')
+    messageAfter = models.TextField(blank=True, default='')

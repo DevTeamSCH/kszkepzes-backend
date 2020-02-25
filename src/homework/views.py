@@ -8,12 +8,28 @@ from common import permissions
 class TasksViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.TaskSerializer
     queryset = models.Task.objects.all()
-    permission_classes = (permissions.IsStaffOrReadOnlyForAuthenticated, permissions.IsStaffOrStudent, )
+    permission_classes = (
+        permissions.IsStaffOrReadOnlyForAuthenticated,
+        permissions.IsStaffOrStudent,
+    )
+
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)
 
 
 class SolutionsViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.SolutionSerializer
+    serializer_class = serializers.SolutionSerializer_Student
     permission_classes = (permissions.IsStaffOrStudent, )
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if user.profile.role == 'Staff':
+            return serializers.SolutionSerializer_Staff
+        return serializers.SolutionSerializer_Student
 
     def get_queryset(self):
         user = self.request.user
@@ -24,3 +40,10 @@ class SolutionsViewSet(viewsets.ModelViewSet):
             if profile_id is not None:
                 queryset = queryset.filter(created_by=profile_id)
         return queryset
+    
+    def perform_create(self, serializer):
+        kwargs = {
+            'created_by': self.request.user.profile
+        }
+ 
+        serializer.save(**kwargs)

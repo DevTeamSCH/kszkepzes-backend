@@ -5,7 +5,8 @@ from . import models
 class SignUpResource(resources.ModelResource):
     groups = fields.Field(
         attribute='groups',
-        widget=widgets.ManyToManyWidget(model=models.GroupChoice, separator=' ,', field='choice'),
+        widget=widgets.ManyToManyWidget(
+            model=models.GroupChoice, separator=' ,', field='choice'),
     )
 
     class Meta:

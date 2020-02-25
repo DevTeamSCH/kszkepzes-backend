@@ -22,7 +22,8 @@ class StaffEventSerializer(serializers.ModelSerializer):
         if 'absent' in data and 'visitors' in data:
             for i in data['absent']:
                 if i in data['visitors']:
-                    raise serializers.ValidationError('You cant add a student to absent and visitor in the same time.')
+                    raise serializers.ValidationError(
+                        'You cant add a student to absent and visitor in the same time.')
         return data
 
 
@@ -37,6 +38,15 @@ class NoteSerializer(serializers.ModelSerializer):
     created_by = serializers.HiddenField(default=CurrentUserProfileDefault())
     created_by_name = serializers.SerializerMethodField()
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if not data['event']:
+            data['event'] = ""
+        if not data['profile']:
+            data['profile'] = ""
+
+        return data
+
     class Meta:
         model = models.Note
         fields = '__all__'
@@ -47,5 +57,6 @@ class NoteSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data['profile'] is None and data['event'] is None:
-            raise serializers.ValidationError('You have to add profile or event')
+            raise serializers.ValidationError(
+                'You have to add profile or event')
         return data

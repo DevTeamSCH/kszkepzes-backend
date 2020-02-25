@@ -1,8 +1,8 @@
 from django.core.mail import send_mail
 import codecs
 
-sender_email = 'noreply@ujonc.sch.bme.hu'
-link = 'https://ujonc.sch.bme.hu/homework'
+sender_email = 'noreply@ujonc.kszk.bme.hu'
+link = 'https://ujonc.kszk.bme.hu/homework'
 
 
 def read_email(name):
@@ -16,6 +16,7 @@ def registration(user):
     message = read_email('registration.txt')
     message = str.format(message % {'name': user.get_full_name()})
     send_mail(subject, message, sender_email, [user.email, ])
+    pass
 
 
 def admitted(user):
@@ -23,6 +24,7 @@ def admitted(user):
     message = read_email('admitted.txt')
     message = str.format(message % {'name': user.get_full_name()})
     send_mail(subject, message, sender_email, [user.email, ])
+    pass
 
 
 def denied(user):
@@ -30,14 +32,17 @@ def denied(user):
     message = read_email('denied.txt')
     message = str.format(message % {'name': user.get_full_name()})
     send_mail(subject, message, sender_email, [user.email, ])
+    pass
 
 
 def new_homework(user, deadline):
     deadline = deadline.strftime('%Y-%m-%d %H:%M')
     subject = "Új házifeladat"
     message = read_email('new_homework.txt')
-    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
+    message = str.format(
+        message % {'name': user.get_full_name(), 'link': link, 'deadline': deadline})
     send_mail(subject, message, sender_email, [user.email, ])
+    pass
 
 
 def homework_corrected(user, title, accepted):
@@ -47,5 +52,7 @@ def homework_corrected(user, title, accepted):
     else:
         status = 'Hibás'
     message = read_email('homework_corrected.txt')
-    message = str.format(message % {'name': user.get_full_name(), 'link': link, 'status': status, 'title': title})
+    message = str.format(message % {'name': user.get_full_name(
+    ), 'link': link, 'status': status, 'title': title})
     send_mail(subject, message, sender_email, [user.email, ])
+    pass

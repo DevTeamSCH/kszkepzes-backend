@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'import_export',
     'rest_framework',
+    "rest_framework_api_key",
     'social_django',
     'solo',
     'authsch',
@@ -48,6 +49,10 @@ INSTALLED_APPS = [
     'stats',
     'news',
     'document',
+    'mentors',
+    'images',
+    'groups',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'common.middleware.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'kszkepzes.urls'
@@ -154,7 +158,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/django-static/'
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_ROOT = os.getenv('MEDIA_ROOT', '/tmp')
-MEDIA_URL = '/media/'
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")

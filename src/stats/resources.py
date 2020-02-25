@@ -7,7 +7,8 @@ from . import models
 class EventResource(resources.ModelResource):
     visitors = fields.Field(
         attribute='visitors',
-        widget=widgets.ManyToManyWidget(model=Profile, separator=' ,', field='full_name'),
+        widget=widgets.ManyToManyWidget(
+            model=Profile, separator=' ,', field='full_name'),
     )
 
     class Meta:
